@@ -1,11 +1,526 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>소미경 — Web Publisher Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Syne+Mono&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-    
+<div id="grain"></div>
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+<div id="pageSweep"></div>
+
+
+
+<nav id="mainNav">
+  <div class="nav-contact">Seoul, Korea / 2025</div>
+  <ul class="nav-center">
+    <li><a data-target="p1">Home</a></li>
+    <li><a data-target="p2">About</a></li>
+    <li><a data-target="p3">Project</a></li>
+    <li><a data-target="p5">AI</a></li>
+    <li><a data-target="p4">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="pg-ind" id="pgInd">
+  <div class="pg-line active" data-i="0"><span class="pg-num">01</span></div>
+  <div class="pg-line" data-i="1"><span class="pg-num">02</span></div>
+  <div class="pg-line" data-i="2"><span class="pg-num">03</span></div>
+  <div class="pg-line" data-i="3"><span class="pg-num">04</span></div>
+  <div class="pg-line" data-i="4"><span class="pg-num">05</span></div>
+</div>
+
+<!-- PAGE 1 -->
+<section class="page" id="p1">
+
+  <div class="hero-wrap">
+    <!-- 좌상단: portfolio + 태그 -->
+    <div class="hero-top">
+      <h1 class="hero-h1" id="heroTitle">portfolio</h1>
+      <div class="hero-sub-row">
+        <span class="hero-tag" id="typingTag"></span>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- 중앙 우측: 네비 -->
+    <nav class="hero-nav">
+      <a data-target="p2">About</a>
+      <a data-target="p3">Project</a>
+      <a data-target="p5">AI</a>
+      <a data-target="p4">Contact</a>
+    </nav>
+
+    <!-- 좌하단: 스탯 -->
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num">10+</span>
+        <span class="hero-stat-label">Projects</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">4yr</span>
+        <span class="hero-stat-label">Experience</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">11</span>
+        <span class="hero-stat-label">Skills</span>
+      </div>
+    </div>
+
+    <!-- 하단 이름 타이포 제거 -->
+
+    <!-- 우하단: 연락처 -->
+    <div class="hero-bottom">
+      <div class="hero-contacts">
+        <a href="tel:+821075977814">+82 10-7597-7814</a>
+        <a href="mailto:sssomikyeong@gmail.com">sssomikyeong@gmail.com</a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- PAGE 2 -->
+<section class="page" id="p2">
+  <div class="about-bg-word">About</div>
+  <div class="about-side">Web Publisher · Seoul · Est. 1994</div>
+  <div class="about-layout">
+    <div class="about-intro">
+      <div class="about-section-tag rv d1">
+        <div class="tag-line"></div>
+        <span class="tag-txt">02 — About</span>
+      </div>
+      <p class="about-quote rv d2">
+        열정적인 태도와 원활한 소통으로 함께 일하고 싶은,<br>
+        지속적인 학습과 성장을 추구하는,<br>
+        유연한 사고로 협업하는<br>
+        <strong>웹퍼블리셔 소미경</strong>입니다.
+      </p>
+      <div class="info-grid rv d3">
+        <div class="info-block">
+          <div class="name">소미경</div>
+          <div class="birth">1994.08.28</div>
+        </div>
+        <div class="info-block">
+          <h5>Contact</h5>
+          <ul>
+            <li><a href="tel:+821075977814">+82 10-7597-7814</a></li>
+            <!-- ④ 이메일 변경 -->
+            <li><a href="mailto:sssomikyeong@gmail.com">sssomikyeong@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="about-right">
+      <div class="right-section rv d2">
+        <h4>Education</h4>
+        <div class="edu-item">
+          <div class="period">2019.11 — 2020.01</div>
+          <div class="edu-name">일산 더조은컴퓨터아트학원</div>
+          <div class="exp-role">웹디자인 기초과정 수료</div>
+        </div>
+        <div class="edu-item">
+          <div class="period">2020.06 — 2020.11</div>
+          <div class="edu-name">강남 그린컴퓨터아카데미</div>
+          <div class="exp-role">UI/UX 디자인 웹퍼블리셔&amp;프론트엔드 개발자 양성과정 수료</div>
+        </div>
+        <!-- ⑤ 강남 디자이나스 → 강남 디자인나스 -->
+        <div class="edu-item" style="margin-bottom:0">
+          <div class="period">2025.03 — 현재</div>
+          <div class="edu-name">강남 디자인나스</div>
+          <div class="exp-role">ND Class 진행중</div>
+        </div>
+      </div>
+      <div class="right-section rv d3">
+        <h4>Experience</h4>
+        <div class="exp-item">
+          <div class="period">2020.12 — 2021.01</div>
+          <div class="exp-name">알앤알스퀘어</div>
+          <div class="exp-role">개발팀 — 웹퍼블리셔</div>
+        </div>
+        <div class="exp-item">
+          <div class="period">2021.04 — 2021.11</div>
+          <div class="exp-name">다름</div>
+          <div class="exp-role">미블리상팀 — 웹퍼블리셔</div>
+        </div>
+        <div class="exp-item">
+          <div class="period">2022.01 — 2025.05</div>
+          <div class="exp-name">네티브</div>
+          <div class="exp-role">UI개발그룹 — 웹퍼블리셔</div>
+        </div>
+        <!-- ⑥ 더블유에프텍 추가 -->
+        <div class="exp-item" style="margin-bottom:0">
+          <div class="period">2025.08 — 현재</div>
+          <div class="exp-name">더블유에프텍</div>
+          <div class="exp-role">웹퍼블리셔 (프리랜서)</div>
+        </div>
+      </div>
+      <div class="right-section rv d4">
+        <h4>Skills</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">HTML</span><span class="skill-tag">CSS</span>
+          <span class="skill-tag">SCSS</span><span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">jQuery</span><span class="skill-tag">Jira</span>
+          <span class="skill-tag">Git</span><span class="skill-tag">GitHub</span>
+          <span class="skill-tag">Figma</span><span class="skill-tag">Photoshop</span>
+          <span class="skill-tag">Zeplin</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 3 : 아코디언 프로젝트 -->
+<section class="page" id="p3">
+  <div class="works-wrap">
+    <div class="works-head rv d1">
+      <span class="works-title">Project</span>
+      <span class="works-count">10 Projects + 1 Design</span>
+    </div>
+    <div class="works-list">
+
+      <!-- 01 -->
+      <div class="work-item rv d2">
+        <div class="work-row">
+          <span class="w-idx">01</span>
+          <span class="w-name">SKT 마케팅 플랫폼 프로젝트</span>
+          <span class="w-period">2021.04 — 2021.11</span>
+          <span class="w-client">SKT · 2021.04–11</span>
+          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="work-detail">
+          <div class="work-detail-inner">
+            <div class="work-detail-tag">기여 내용</div>
+            <div class="work-detail-text">다수의 협력업체와 함께한 대규모 마케팅 플랫폼 프로젝트로, 신규 페이지 퍼블리싱 및 기존 화면 유지보수를 담당했습니다. Zeplin을 활용해 디자이너와 협업하며 디자인 시안을 픽셀 단위로 구현했고, 반응형 레이아웃 구현과 크로스 브라우징 대응을 수행했습니다.</div>
+            <div class="work-detail-chips">
+              <span class="detail-chip">HTML</span><span class="detail-chip">SCSS</span><span class="detail-chip">JavaScript</span><span class="detail-chip">Zeplin</span><span class="detail-chip">반응형</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02 -->
+      <div class="work-item rv d2" style="transition-delay:.14s">
+        <div class="work-row">
+          <span class="w-idx">02</span>
+          <span class="w-name">KB국민은행 기관전용플랫폼</span>
+          <span class="w-period">2021.12</span>
+          <span class="w-client">KB국민은행 · 2021.12</span>
+          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="work-detail">
+          <div class="work-detail-inner">
+            <div class="work-detail-tag">기여 내용</div>
+            <div class="work-detail-text">KB국민은행 기관전용 서비스 확장 프로젝트에서 신규 기능 화면의 마크업 및 스타일 작업을 담당했습니다. 금융 서비스 특성에 맞는 웹 접근성(WCAG) 기준을 준수하며 구현했습니다.</div>
+            <div class="work-detail-chips">
+              <span class="detail-chip">HTML</span><span class="detail-chip">CSS</span><span class="detail-chip">jQuery</span><span class="detail-chip">웹접근성</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 -->
+      <div class="work-item rv d3">
+        <div class="work-row">
+          <span class="w-idx">03</span>
+          <span class="w-name">한국투자증권 2차 리뉴얼</span>
+          <span class="w-period">2022.04 — 2022.08</span>
+          <span class="w-client">한국투자증권 · 2022.04–08</span>
+          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="work-detail">
+          <div class="work-detail-inner">
+            <div class="work-detail-tag">기여 내용</div>
+            <div class="work-detail-text">한국투자증권 웹사이트 2차 전면 리뉴얼에서 레거시 마크업을 시맨틱 HTML5 + SCSS 구조로 재구축했습니다. 복잡한 금융 데이터 테이블 UI 및 탭·아코디언 컴포넌트 구현을 주도했습니다.</div>
+            <div class="work-detail-chips">
+              <span class="detail-chip">HTML5</span><span class="detail-chip">SCSS</span><span class="detail-chip">JavaScript</span><span class="detail-chip">컴포넌트</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04 -->
+      <div class="work-item rv d3" style="transition-delay:.28s">
+        <div class="work-row">
+          <span class="w-idx">04</span>
+          <span class="w-name">나이스지키미 UI/UX 고도화</span>
+          <span class="w-period">2022.08</span>
+          <span class="w-client">나이스지키미 · 2022.08</span>
+          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="work-detail">
+          <div class="work-detail-inner">
+            <div class="work-detail-tag">기여 내용</div>
+            <div class="work-detail-text">나이스지키미 서비스 UI/UX 고도화 프로젝트에서 Figma 디자인 시안을 기반으로 전체 화면 퍼블리싱을 진행했습니다. 사용자 경험 개선을 위한 컴포넌트 재설계 및 인터랙션 구현에 집중했습니다.</div>
+            <div class="work-detail-chips">
+              <span class="detail-chip">HTML</span><span class="detail-chip">SCSS</span><span class="detail-chip">Figma</span><span class="detail-chip">UI/UX</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05 -->
+      <div class="work-item rv d4">
+        <div class="work-row">
+          <span class="w-idx">05</span>
+          <span class="w-name">네티브 캠페인 발송 기능 구현</span>
+          <span class="w-period">2022.08 — 2022.09</span>
+          <span class="w-client">네티브 · 2022.08–09</span>
+          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="work-detail">
+          <div class="work-detail-inner">
+            <div class="work-detail-tag">기여 내용</div>
+            <div class="work-detail-text">이메일·앱푸시 캠페인 발송 기능의 프론트엔드 퍼블리싱 전담. 다단계 폼 인터랙션, 실시간 미리보기 패널, 단계별 진행 상태 UI 구현을 담당했습니다.</div>
+            <div class="work-detail-chips">
+              <span class="detail-chip">HTML</span><span class="detail-chip">SCSS</span><span class="detail-chip">JavaScript</span><span class="detail-chip">jQuery</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 06 -->
+      <div class="work-item rv d4" style="transition-delay:.42s">
+        <div class="work-row">
+          <span class="w-idx">06</span>
+          <span class="w-name">암웨이 A Content 마이그레이션</span>
+          <span class="w-period">2022.12 — 2023.01</span>
+          <span class="w-client">암웨이 · 2022.12–2023.01</span>
+          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="work-detail">
+          <div class="work-detail-inner">
+            <div class="work-detail-tag">기여 내용</div>
+            <div class="work-detail-text">암웨이 콘텐츠 플랫폼 마이그레이션 프로젝트에서 기존 레거시 마크업을 신규 CMS 구조에 맞게 이관·재정비했습니다. 코드 품질 향상 및 불필요한 스타일 정리 작업을 수행했습니다.</div>
+            <div class="work-detail-chips">
+              <span class="detail-chip">HTML</span><span class="detail-chip">CSS</span><span class="detail-chip">SCSS</span><span class="detail-chip">Git</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 07 -->
+      <div class="work-item rv d5">
+        <div class="work-row">
+          <span class="w-idx">07</span>
+          <span class="w-name">현대해상 다이렉트 보험 서비스</span>
+          <span class="w-period">2023.05</span>
+          <span class="w-client">현대해상 · 2023.05</span>
+          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="work-detail">
+          <div class="work-detail-inner">
+            <div class="work-detail-tag">기여 내용</div>
+            <div class="work-detail-text">현대해상 다이렉트 보험 서비스 플랫폼에서 보험 가입 플로우 전체 UI 퍼블리싱을 담당했습니다. 복잡한 단계별 가입 폼, 약관 동의 체크박스 UI, 모바일 최적화 작업을 수행했습니다.</div>
+            <div class="work-detail-chips">
+              <span class="detail-chip">HTML</span><span class="detail-chip">SCSS</span><span class="detail-chip">JavaScript</span><span class="detail-chip">모바일</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 08 -->
+      <div class="work-item rv d5" style="transition-delay:.56s">
+        <div class="work-row">
+          <span class="w-idx">08</span>
+          <span class="w-name">라이나생명 운영</span>
+          <span class="w-period">2023.05 — 2023.06</span>
+          <span class="w-client">라이나생명 · 2023.05–06</span>
+          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="work-detail">
+          <div class="work-detail-inner">
+            <div class="work-detail-tag">기여 내용</div>
+            <div class="work-detail-text">라이나생명 웹사이트 운영 및 유지보수를 담당했습니다. 긴급 이슈 대응, 이벤트 페이지 신규 제작, 콘텐츠 업데이트 및 배너 작업을 수행했습니다.</div>
+            <div class="work-detail-chips">
+              <span class="detail-chip">HTML</span><span class="detail-chip">CSS</span><span class="detail-chip">jQuery</span><span class="detail-chip">운영</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 09 -->
+      <div class="work-item rv d6">
+        <div class="work-row">
+          <span class="w-idx">09</span>
+          <span class="w-name">KB헬스케어 운영</span>
+          <span class="w-period">2023.07 — 2025.05</span>
+          <span class="w-client">KB헬스케어 · 2023.07–2025.05</span>
+          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="work-detail">
+          <div class="work-detail-inner">
+            <div class="work-detail-tag">기여 내용</div>
+            <div class="work-detail-text">KB헬스케어 서비스를 약 2년간 장기 운영하며 신규 기능 개발부터 유지보수까지 전반적인 UI 퍼블리싱을 담당했습니다. 정기 배포 참여, 컴포넌트 개선, QA 대응 및 이슈 트래킹(Jira)을 수행했습니다.</div>
+            <div class="work-detail-chips">
+              <span class="detail-chip">HTML</span><span class="detail-chip">SCSS</span><span class="detail-chip">JavaScript</span><span class="detail-chip">Jira</span><span class="detail-chip">GitHub</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ⑦ 10 새마을금고 추가 -->
+      <div class="work-item rv d6" style="transition-delay:.72s">
+        <div class="work-row">
+          <span class="w-idx">10</span>
+          <span class="w-name">새마을금고 IT단위업무 운영</span>
+          <span class="w-period">2025.08 — 현재</span>
+          <span class="w-client">새마을금고 · 2025.08–현재</span>
+          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="work-detail">
+          <div class="work-detail-inner">
+            <div class="work-detail-tag">기여 내용</div>
+            <div class="work-detail-text">사내·대외 서비스 웹페이지의 마크업 구현 및 유지보수를 담당하고 있습니다. Figma·Photoshop 시안 기반의 반응형 UI 퍼블리싱, 웹 접근성 준수, 공통 UI 컴포넌트 및 퍼블리싱 가이드 관리를 맡고 있으며, 기존 JSP 화면을 웹표준에 맞게 리팩토링해 유지보수성을 높였습니다. ITSM을 통한 배포, QA 검증, 개발·디자인팀 협업, 일간·주간·월간 보고까지 운영 전반을 체계적으로 수행 중입니다.</div>
+            <div class="work-detail-chips">
+              <span class="detail-chip">HTML</span><span class="detail-chip">CSS</span><span class="detail-chip">JavaScript</span><span class="detail-chip">Figma</span><span class="detail-chip">웹접근성</span><span class="detail-chip">ITSM</span><span class="detail-chip">반응형</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /works-list -->
+
+    <div class="marquee-wrap">
+      <div class="marquee-track">
+        <span>HTML</span><span>✦</span><span>CSS / SCSS</span><span>✦</span><span>JavaScript</span><span>✦</span><span>jQuery</span><span>✦</span><span>Figma</span><span>✦</span><span>Git / GitHub</span><span>✦</span><span>Web Publishing</span><span>✦</span><span>UI / UX</span><span>✦</span>
+        <span>HTML</span><span>✦</span><span>CSS / SCSS</span><span>✦</span><span>JavaScript</span><span>✦</span><span>jQuery</span><span>✦</span><span>Figma</span><span>✦</span><span>Git / GitHub</span><span>✦</span><span>Web Publishing</span><span>✦</span><span>UI / UX</span><span>✦</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 4 : AI -->
+<section class="page" id="p5">
+  <div class="ai-wrap">
+
+    <div class="ai-head rv d1">
+      <div class="ai-head-left">
+        <div class="about-section-tag">
+          <div class="tag-line"></div>
+          <span class="tag-txt">04 — AI Workflow</span>
+        </div>
+        <h2 class="ai-title">AI를 활용하는<br>웹퍼블리셔</h2>
+        <p class="ai-desc">단순한 도구 사용을 넘어, AI와 협업해 더 빠르고 정교하게 구현합니다. 이 포트폴리오 사이트 역시 Claude AI와 함께 설계하고 제작했습니다.</p>
+      </div>
+      <div class="ai-head-right rv d2">
+        <div class="ai-badge">
+          <span class="ai-badge-dot"></span>
+          <span class="ai-badge-text">AI-Assisted Portfolio</span>
+        </div>
+        <p class="ai-sub">기획 · 디자인 · 코드 구현 전 과정에<br>AI를 워크플로우에 통합했습니다.</p>
+      </div>
+    </div>
+
+    <div class="ai-cards rv d3">
+
+      <div class="ai-card">
+        <div class="ai-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="ai-card-num">01</div>
+        <h3 class="ai-card-title">Claude AI</h3>
+        <p class="ai-card-desc">포트폴리오 전체 구조 설계, HTML/CSS/JS 코드 구현, 레이아웃 개선을 AI와 협업해 진행했습니다.</p>
+        <div class="ai-card-tags">
+          <span>코드 생성</span><span>디버깅</span><span>레이아웃 설계</span>
+        </div>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="ai-card-num">02</div>
+        <h3 class="ai-card-title">ChatGPT</h3>
+        <p class="ai-card-desc">퍼블리싱 작업 시 복잡한 CSS 구조 해석, 크로스브라우징 이슈 분석, 코드 최적화에 활용합니다.</p>
+        <div class="ai-card-tags">
+          <span>코드 리뷰</span><span>이슈 분석</span><span>최적화</span>
+        </div>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div class="ai-card-num">03</div>
+        <h3 class="ai-card-title">GitHub Copilot</h3>
+        <p class="ai-card-desc">반복적인 마크업 작업 자동완성, 컴포넌트 패턴 제안으로 퍼블리싱 속도를 높이는 데 활용합니다.</p>
+        <div class="ai-card-tags">
+          <span>자동완성</span><span>패턴 제안</span><span>생산성</span>
+        </div>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 010 20A10 10 0 0112 2z"/><path d="M12 2c2.5 5 2.5 15 0 20M12 2c-2.5 5-2.5 15 0 20M2 12h20"/></svg>
+        </div>
+        <div class="ai-card-num">04</div>
+        <h3 class="ai-card-title">Gemini</h3>
+        <p class="ai-card-desc">Google Gemini를 활용해 디자인 레퍼런스 분석, 콘텐츠 문구 정리, 아이디어 발굴 등 기획 단계에서 활용합니다.</p>
+        <div class="ai-card-tags">
+          <span>아이디어</span><span>문구 정리</span><span>레퍼런스</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ai-bottom rv d4">
+      <div class="ai-quote">
+        <span class="ai-quote-mark">"</span>
+        <span>"AI는 대체가 아닌 협업 도구, 더 좋은 결과를 위해 적극 활용합니다."</span>
+      </div>
+      <div class="ai-arrow" onclick="document.getElementById('p4').scrollIntoView({behavior:'smooth'})">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PAGE 4 (Contact) -->
+<section class="page" id="p4">
+  <div class="rings">
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="contact-inner">
+    <div class="contact-tag rv d1">Get in touch</div>
+    <!-- ⑨ line-height:1.5 인라인으로 적용 -->
+    <h2 class="contact-h rv d2">
+      함께 만들어 갈<br>
+      프로젝트가<br>
+      있으신가요?
+    </h2>
+    <div class="contact-row rv d3">
+      <div class="cinfo">
+        <span class="cinfo-label">Phone</span>
+        <span class="cinfo-val">+82 10-7597-7814</span>
+      </div>
+      <div class="cinfo">
+        <span class="cinfo-label">Email</span>
+        <!-- ④ 이메일 변경 -->
+        <span class="cinfo-val">sssomikyeong@gmail.com</span>
+      </div>
+    </div>
+  </div>
+  <div class="contact-footer">
+    <span class="cf-copy">© 2026  PORTFOLIO</span>
+    <div class="cf-badge">
+      <span class="cf-badge-role">WEB PUBLISHER</span>
+      <span class="cf-badge-name">MIKYEONG SO</span>
+    </div>
+  </div>
+</section>
+
+<script src="main.js"></script>
 </body>
 </html>
