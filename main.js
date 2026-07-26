@@ -43,7 +43,7 @@ document.addEventListener('scroll',updateNavBg,{passive:true,capture:true});
 
 /* ══ 4. PAGE DOTS ══ */
 const pgLines=document.querySelectorAll('.pg-line');
-const pageEls=['p1','p2','p3','p5','p4'].map(id=>document.getElementById(id));
+const pageEls=['p1','p2','p3','p6','p5','p4'].map(id=>document.getElementById(id));
 pgLines.forEach(l=>{l.addEventListener('click',()=>pageEls[+l.dataset.i].scrollIntoView({behavior:'smooth'}));});
 pageEls.forEach(p=>new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){const i=pageEls.indexOf(e.target);pgLines.forEach((l,j)=>l.classList.toggle('active',j===i));}});
