@@ -562,6 +562,14 @@ nav.scrolled{
 /* ══ PAGE 4 — PERSONAL (직접 만든 사이트) ══ */
 #p6{background:var(--bg);height:auto;min-height:100vh;overflow-y:auto}
 
+/* 화면에는 숨기고 스크린리더에만 읽히는 텍스트 */
+.visually-hidden{
+  position:absolute;width:1px;height:1px;
+  margin:-1px;padding:0;border:0;
+  clip:rect(0 0 0 0);clip-path:inset(50%);
+  overflow:hidden;white-space:nowrap;
+}
+
 .side-wrap{
   min-height:100vh;
   padding:88px 8% 60px;
@@ -634,8 +642,6 @@ nav.scrolled{
   transition:color .25s,transform .3s cubic-bezier(.25,.46,.45,.94);
 }
 .side-card:hover .side-arrow{color:var(--fg);transform:translate(2px,-2px)}
-/* 같은 사이트 안에서 열리는 카드는 → 로 표시하므로 옆으로만 밀린다 */
-.side-card.is-local:hover .side-arrow{transform:translateX(3px)}
 
 .side-name{
   font-family:var(--syne);font-size:19px;font-weight:700;
