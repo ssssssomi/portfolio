@@ -247,9 +247,13 @@
         <div class="work-detail">
           <div class="work-detail-inner">
             <div class="work-detail-tag">기여 내용</div>
-            <div class="work-detail-text">한국투자증권 웹사이트 2차 전면 리뉴얼에서 레거시 마크업을 시맨틱 HTML5 + SCSS 구조로 재구축했습니다. 복잡한 금융 데이터 테이블 UI 및 탭·아코디언 컴포넌트 구현을 주도했습니다.</div>
+            <div class="work-detail-text">한국투자증권 웹사이트 2차 전면 리뉴얼에서 레거시 마크업을 시맨틱 HTML5 + SCSS 구조로 재구축했습니다. 복잡한 금융 데이터 테이블 UI 및 탭·아코디언 컴포넌트 구현을 주도했습니다. 재구축 단계부터 WCAG 기준을 마크업에 반영해, <strong>웹접근성 심사를 받아 인증 마크를 취득했습니다.</strong></div>
+            <div class="a11y-badge">
+              <span class="a11y-badge-mark" aria-hidden="true">WA</span>
+              <span class="a11y-badge-text">웹접근성 심사 통과 · 인증 마크 취득</span>
+            </div>
             <div class="work-detail-chips">
-              <span class="detail-chip">HTML5</span><span class="detail-chip">SCSS</span><span class="detail-chip">JavaScript</span><span class="detail-chip">컴포넌트</span>
+              <span class="detail-chip">HTML5</span><span class="detail-chip">SCSS</span><span class="detail-chip">JavaScript</span><span class="detail-chip">컴포넌트</span><span class="detail-chip">웹접근성</span>
             </div>
           </div>
         </div>
@@ -387,7 +391,7 @@
         <div class="work-detail">
           <div class="work-detail-inner">
             <div class="work-detail-tag">기여 내용</div>
-            <div class="work-detail-text">통합 홈페이지뿐 아니라 자회사 홈페이지 리뉴얼과 이후 운영 퍼블리싱까지 함께 담당하고 있습니다. 투입 초기에는 오래 쌓여 복잡해진 레거시 코드를 직접 분석해 중복되고 얽혀 있던 CSS를 정리했고, 디자이너가 반응형 시안까지 내려주기 어려운 상황에서는 원본 디자인의 의도를 유지하는 선에서 반응형 레이아웃을 직접 설계·구현했습니다. 이미 적응형(고정 폭 분기)으로 작업되어 있던 화면에 반응형 전환 요청이 들어오는 경우에도, 기존 마크업을 유지한 채 브레이크포인트와 유동 그리드를 다시 잡아 반응형으로 직접 전환해 왔습니다. 작업은 로컬에서 끝나지 않고 퍼블 서버와 개발 서버(JSP) 전 구간을 직접 수정한 뒤 ITSM 요청을 통해 운영 배포까지 수행합니다. <strong>이 과정에서 웹접근성 심사를 받아 인증 마크를 취득했습니다.</strong> 이 밖에 공통 UI 컴포넌트와 퍼블리싱 가이드 관리, QA 검증, 개발·디자인팀 협업, 일간·주간·월간 보고까지 운영 전반을 맡고 있습니다.</div>
+            <div class="work-detail-text">대표 홈페이지와 자회사 홈페이지를 한 사람이 함께 맡는 <strong>공통 퍼블리셔</strong>로서, 리뉴얼부터 이후 운영 퍼블리싱까지 전 사이트를 일관된 기준으로 관리하고 있습니다. 투입 초기에는 오래 쌓여 복잡해진 레거시 코드를 직접 분석해 중복되고 얽혀 있던 CSS를 정리했고, 디자이너가 반응형 시안까지 내려주기 어려운 상황에서는 원본 디자인의 의도를 유지하는 선에서 반응형 레이아웃을 직접 설계·구현했습니다. 현재는 <strong>적응형(고정 폭 분기)으로 구축되어 있던 홈페이지들을 반응형으로 전환하는 작업을 진행 중</strong>이며, 기존 마크업을 유지한 채 브레이크포인트와 유동 그리드를 다시 잡아 사이트별로 순차 전환하고 있습니다. 작업은 로컬에서 끝나지 않고 퍼블 서버와 개발 서버(JSP) 전 구간을 직접 수정한 뒤 ITSM 요청을 통해 운영 배포까지 수행합니다. <strong>이 과정에서 웹접근성 심사를 받아 인증 마크를 취득했습니다.</strong> 이 밖에 공통 UI 컴포넌트와 퍼블리싱 가이드 관리, QA 검증, 개발·디자인팀 협업, 일간·주간·월간 보고까지 운영 전반을 맡고 있습니다.</div>
             <div class="a11y-badge">
               <span class="a11y-badge-mark" aria-hidden="true">WA</span>
               <span class="a11y-badge-text">웹접근성 심사 통과 · 인증 마크 취득</span>
@@ -535,11 +539,23 @@
           <span class="side-hub-url">sogeulsogeul.github.io/sogeul-site</span>
           <span class="visually-hidden">새 창 열림</span>
         </a>
-        <p class="side-count">6 Live Sites</p>
+        <p class="side-count">7 Live Sites</p>
       </div>
     </div>
 
     <div class="side-grid rv d3">
+
+      <a class="side-card" href="shinhan/index.html" target="_blank" rel="noopener">
+        <div class="side-card-top">
+          <span class="side-kind">Redesign</span>
+          <span class="side-arrow" aria-hidden="true">↗</span>
+        </div>
+        <h3 class="side-name">신한투자증권 리디자인</h3>
+        <p class="side-desc">신한투자증권 메인페이지를 처음부터 다시 설계한 리디자인 시안입니다. 자주 쓰는 메뉴·상품 랭킹·시세를 흐름에 맞게 재배치하고, 단일 HTML로 반응형까지 구현했습니다.</p>
+        <div class="side-chips"><span>정보 구조 재설계</span><span>반응형</span><span>단일 HTML</span></div>
+        <span class="side-url">ssssssomi.github.io/portfolio/shinhan</span>
+        <span class="visually-hidden">새 창 열림</span>
+      </a>
 
       <a class="side-card" href="https://sogeulsogeul.github.io/tonfit/" target="_blank" rel="noopener">
         <div class="side-card-top">
