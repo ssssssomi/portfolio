@@ -1,0 +1,248 @@
+<!doctype html>
+<!--
+  ============================================================================
+  [임시 파일 — 고객 컨펌용]
+  로고 / 섹션 영문 소제목에 쓸 디스플레이 폰트 후보 3종 비교 페이지입니다.
+  폰트가 확정되면
+    1) assets/css/style.css 의 :root > "디스플레이 폰트" 블록에서 확정 폰트 한 줄만 활성화
+    2) index.html <head> 의 Google Fonts 링크에서 사용하지 않는 2종 제거
+    3) 이 파일(font-preview.html) 삭제
+  ============================================================================
+-->
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>오제하우스 — 폰트 후보 비교 (컨펌용 임시 페이지)</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Prata&family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+<style>
+:root{
+  --ink:#4a4138; --ink-soft:#7e6f63; --ink-faint:#a8988a;
+  --line:rgba(74,65,56,0.10); --line-strong:rgba(74,65,56,0.18);
+  --rose-deep:#b07f5e;
+  --glass-border:rgba(255,255,255,0.75);
+}
+*,*::before,*::after{ box-sizing:border-box; }
+body{
+  margin:0; color:var(--ink);
+  font-family:'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:16px; line-height:1.7;
+  background:linear-gradient(180deg,#f6f1ea 0%,#f5ebe0 32%,#f3e3d5 64%,#f2ddcb 100%);
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+
+/* 후보 폰트 3종 — 실제 사이트와 동일하게 "변수로만" 지정하고,
+   아래 데모 요소에만 적용한다(설명 문구·한글은 Pretendard 유지). */
+.f-italiana{ --demo-font:'Italiana',serif;          --track:.09em; }
+.f-prata   { --demo-font:'Prata',serif;             --track:.03em; }
+.f-dmserif { --demo-font:'DM Serif Display',serif;  --track:.01em; }
+.demo-hero-logo,.demo-sec-title,.demo-footer-logo,.demo-city{
+  font-family:var(--demo-font); font-weight:400;
+}
+
+header{ padding:64px 0 34px; text-align:center; }
+.kicker{
+  font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--ink-faint); margin:0 0 12px;
+}
+header h1{ font-size:22px; font-weight:600; margin:0 0 10px; }
+header p{ margin:0; font-size:14px; color:var(--ink-soft); }
+
+.temp-note{
+  max-width:620px; margin:26px auto 0; padding:16px 20px;
+  background:rgba(255,255,255,0.55); border:1px dashed var(--rose-deep);
+  border-radius:12px; font-size:13px; color:var(--ink-soft); line-height:1.8;
+}
+.temp-note strong{ color:var(--rose-deep); }
+
+.cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding-bottom:20px; }
+@media (max-width:900px){ .cards{ grid-template-columns:1fr; } }
+
+.card{
+  background:rgba(255,255,255,0.55); border:1px solid var(--glass-border);
+  border-radius:18px; padding:30px 26px 34px;
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  box-shadow:0 10px 32px rgba(140,105,80,0.1), inset 0 1px 0 rgba(255,255,255,0.65);
+  display:flex; flex-direction:column; gap:26px;
+}
+.card.is-current{ border-color:var(--rose-deep); box-shadow:0 12px 38px rgba(176,127,94,0.22); }
+
+.card-head{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.card-head h2{ font-size:15px; font-weight:600; margin:0; letter-spacing:.01em; }
+.tag{
+  font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.12em;
+  padding:4px 9px; border-radius:999px;
+  background:var(--rose-deep); color:#fff;
+}
+.tag.alt{ background:transparent; color:var(--ink-faint); border:1px solid var(--line-strong); }
+
+.spec{ margin:0; font-size:12px; color:var(--ink-faint); line-height:1.6; }
+
+.row{ border-top:1px solid var(--line); padding-top:18px; }
+.row .label{
+  font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-faint); margin:0 0 12px;
+}
+
+/* 실제 사이트에 적용된 값과 동일한 규칙 */
+.demo-hero-logo{
+  font-size:clamp(44px,7vw,64px); line-height:1;
+  letter-spacing:var(--track); padding-left:var(--track);
+  color:var(--ink); margin:0;
+}
+.demo-sec-title{
+  font-size:clamp(28px,3.4vw,38px); line-height:1.2;
+  letter-spacing:var(--track); padding-left:var(--track);
+  color:var(--ink); margin:0 0 8px;
+}
+.demo-sec-title em{ font-style:normal; color:var(--rose-deep); }
+.demo-sub{ font-size:13px; color:var(--ink-soft); margin:0; }
+.demo-footer-logo{
+  font-size:24px; letter-spacing:.32em; margin-left:.32em;
+  color:var(--ink);
+}
+.demo-city{
+  font-size:26px; letter-spacing:var(--track); padding-left:var(--track);
+  color:var(--ink); margin:0 0 6px;
+}
+.demo-city + .date{
+  font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-soft); margin:0;
+}
+
+/* 히어로 대비 확인용 — 흰 글자 / 사진톤 배경 */
+.on-dark{
+  margin-top:auto; border-radius:12px; padding:24px 20px; text-align:center;
+  background:linear-gradient(120deg,#c79a76,#e3bfa2);
+}
+.on-dark .demo-hero-logo{ color:#fff; text-shadow:0 2px 24px rgba(120,80,52,0.45); font-size:clamp(38px,5.5vw,52px); }
+.on-dark .label{ color:rgba(255,255,255,0.75); }
+
+footer{ padding:34px 0 70px; text-align:center; font-size:12.5px; color:var(--ink-faint); }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <p class="kicker">Ojehouse — Font Candidates</p>
+  <h1>로고 · 섹션 영문 소제목 폰트 후보 비교</h1>
+  <p>레퍼런스(하이컨트라스트 패션 세리프) 무드에 맞춘 Google Fonts 3종입니다.</p>
+  <div class="temp-note">
+    이 페이지는 <strong>컨펌용 임시 페이지</strong>로, 폰트 확정 후 삭제 예정입니다.<br>
+    적용 범위: 로고(<code>.hero-logo</code> / <code>.footer-logo</code>), 섹션 영문 소제목(<code>.sec-title .en</code>), 일본 팝업 도시명(<code>.city-name</code>).<br>
+    본문과 한글은 기존 <strong>Pretendard</strong>, 일정·가격은 <strong>IBM Plex Mono</strong> 그대로입니다.
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="cards">
+
+    <!-- 1. Italiana (현재 적용) -->
+    <section class="card is-current f-italiana">
+      <div class="card-head">
+        <h2>Italiana</h2>
+        <span class="tag">현재 적용</span>
+      </div>
+      <p class="spec">가장 얇고 우아한 하이컨트라스트. 레퍼런스 이미지에 가장 가깝습니다. 자간을 넓게(0.09em) 줄 때 예쁘게 나옵니다. 굵기 1종.</p>
+
+      <div class="row">
+        <p class="label">Hero Logo</p>
+        <p class="demo-hero-logo">Ojehouse</p>
+      </div>
+      <div class="row">
+        <p class="label">Section Title</p>
+        <p class="demo-sec-title">Brow <em>&amp;</em> Lip</p>
+        <p class="demo-sec-title">Own Your <em>Brows</em></p>
+        <p class="demo-sec-title">Q <em>&amp;</em> A</p>
+        <p class="demo-sub">지역 물가를 반영해 국가·지역별 가격을 분리해 안내합니다</p>
+      </div>
+      <div class="row">
+        <p class="label">City Card / Footer</p>
+        <p class="demo-city">Tokyo</p>
+        <p class="date">2026.09.10 — 09.15</p>
+        <p style="margin:16px 0 0;"><span class="demo-footer-logo">OJEHOUSE</span></p>
+      </div>
+      <div class="on-dark">
+        <p class="label">Hero (사진 위)</p>
+        <p class="demo-hero-logo">Ojehouse</p>
+      </div>
+    </section>
+
+    <!-- 2. Prata -->
+    <section class="card f-prata">
+      <div class="card-head">
+        <h2>Prata</h2>
+        <span class="tag alt">후보</span>
+      </div>
+      <p class="spec">디돈 계열의 또렷한 하이컨트라스트. Italiana보다 무게감이 있어 작은 크기에서도 잘 읽힙니다. 굵기 1종.</p>
+
+      <div class="row">
+        <p class="label">Hero Logo</p>
+        <p class="demo-hero-logo">Ojehouse</p>
+      </div>
+      <div class="row">
+        <p class="label">Section Title</p>
+        <p class="demo-sec-title">Brow <em>&amp;</em> Lip</p>
+        <p class="demo-sec-title">Own Your <em>Brows</em></p>
+        <p class="demo-sec-title">Q <em>&amp;</em> A</p>
+        <p class="demo-sub">지역 물가를 반영해 국가·지역별 가격을 분리해 안내합니다</p>
+      </div>
+      <div class="row">
+        <p class="label">City Card / Footer</p>
+        <p class="demo-city">Tokyo</p>
+        <p class="date">2026.09.10 — 09.15</p>
+        <p style="margin:16px 0 0;"><span class="demo-footer-logo">OJEHOUSE</span></p>
+      </div>
+      <div class="on-dark">
+        <p class="label">Hero (사진 위)</p>
+        <p class="demo-hero-logo">Ojehouse</p>
+      </div>
+    </section>
+
+    <!-- 3. DM Serif Display -->
+    <section class="card f-dmserif">
+      <div class="card-head">
+        <h2>DM Serif Display</h2>
+        <span class="tag alt">후보</span>
+      </div>
+      <p class="spec">가장 두껍고 안정적인 디스플레이 세리프. 우아함보다 또렷한 존재감이 강합니다. 자간은 거의 주지 않는 편이 자연스럽습니다.</p>
+
+      <div class="row">
+        <p class="label">Hero Logo</p>
+        <p class="demo-hero-logo">Ojehouse</p>
+      </div>
+      <div class="row">
+        <p class="label">Section Title</p>
+        <p class="demo-sec-title">Brow <em>&amp;</em> Lip</p>
+        <p class="demo-sec-title">Own Your <em>Brows</em></p>
+        <p class="demo-sec-title">Q <em>&amp;</em> A</p>
+        <p class="demo-sub">지역 물가를 반영해 국가·지역별 가격을 분리해 안내합니다</p>
+      </div>
+      <div class="row">
+        <p class="label">City Card / Footer</p>
+        <p class="demo-city">Tokyo</p>
+        <p class="date">2026.09.10 — 09.15</p>
+        <p style="margin:16px 0 0;"><span class="demo-footer-logo">OJEHOUSE</span></p>
+      </div>
+      <div class="on-dark">
+        <p class="label">Hero (사진 위)</p>
+        <p class="demo-hero-logo">Ojehouse</p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  폰트 확정 후 <code>assets/css/style.css</code>의 <code>--font-display</code> / <code>--display-track</code> 한 블록만 교체하면 사이트 전체에 반영됩니다.
+</footer>
+
+</body>
+</html>

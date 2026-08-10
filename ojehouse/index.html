@@ -5,11 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="color-scheme" content="light" />
 <title>오제하우스 — 눈썹·입술 반영구 스튜디오</title>
-<meta name="description" content="1인 시술자가 운영하는 반영구 화장 스튜디오. 서울 매장과 도쿄 기간형 출장으로 눈썹, 입술 반영구를 제공합니다. 예약은 채널 문의로 안내드립니다." />
+<meta name="description" content="1인 시술자가 운영하는 반영구 화장 스튜디오. 서울 매장과 일본 순회 팝업(도쿄·오사카·후쿠오카·나고야)으로 눈썹, 입술 반영구를 제공합니다. 예약은 채널 문의로 안내드립니다." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<!--
+  디스플레이 폰트 후보 3종(Italiana / Prata / DM Serif Display)을 모두 로드합니다.
+  → 고객 컨펌이 끝나면 실제로 쓰는 1종만 남기고 나머지 2종은 이 링크에서 제거하세요.
+-->
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Prata&family=DM+Serif+Display&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
 <link rel="stylesheet" href="assets/css/style.css" />
@@ -33,7 +37,7 @@
   <section id="top" class="hero" aria-label="오제하우스 소개">
     <div class="hero-bg" role="img" aria-label="핑크 튤 원단 텍스처"></div>
     <div class="hero-text">
-      <p class="kicker-top">Seoul · Tokyo — Permanent Makeup</p>
+      <p class="kicker-top">Seoul · Japan — Permanent Makeup</p>
       <a href="#top" class="hero-logo">Ojehouse</a>
       <h1 class="visually-hidden">오제하우스 — 눈썹·입술 반영구 스튜디오</h1>
       <p class="sub-ko" data-i18n="heroSub">반영구 눈썹·입술 디자인이 완성될 때,<br>진짜 당신이 시작됩니다</p>
@@ -49,10 +53,10 @@
   <section class="intro">
     <div class="wrap">
       <p class="kicker">Ojehouse, Own Your Face</p>
-      <h2 class="sec-title" style="margin-bottom:22px;">
-        <span class="en serif" data-i18n="introTitle">균형있는 얼굴로의 안내</span>
+      <h2 class="sec-title">
+        <span class="en" data-i18n="introTitle">균형있는 얼굴로의 안내</span>
       </h2>
-      <p class="copy" data-i18n="introCopy">얼굴 구조와 피부 톤을 함께 읽는 1인 시술자의 프라이빗 반영구.<br>상담부터 리터치까지 한 사람이 끝까지 책임집니다.</p>
+      <p class="copy" data-i18n="introCopy">얼굴 구조와 피부 톤을 함께 읽는 1인 시술자의 프라이빗 반영구.<br>상담부터 시술 마무리까지 한 사람이 끝까지 책임집니다.</p>
       <div class="divider" aria-hidden="true"></div>
     </div>
   </section>
@@ -70,8 +74,8 @@
         <ul class="about-facts">
           <li><strong data-i18n="f1k">운영 형태</strong><span data-i18n="f1v">1인 시술자 · 완전 예약제</span></li>
           <li><strong data-i18n="f2k">취급 시술</strong><span data-i18n="f2v">눈썹 반영구, 입술 반영구</span></li>
-          <li><strong data-i18n="f3k">운영 지역</strong><span data-i18n="f3v">서울 매장, 도쿄 기간형 출장</span></li>
-          <li><strong data-i18n="f4k">상담 언어</strong><span data-i18n="f4v">한국어, 영어, 일본어, 중국어</span></li>
+          <li><strong data-i18n="f3k">운영 지역</strong><span data-i18n="f3v">서울 매장, 일본 순회 팝업(도쿄·오사카·후쿠오카·나고야)</span></li>
+          <li><strong data-i18n="f4k">상담 언어</strong><span data-i18n="f4v">한국어 상담만 가능 · 사진/번역으로 진행 · 통역사 요청 가능</span></li>
         </ul>
       </div>
     </div>
@@ -82,7 +86,7 @@
     <div class="wrap">
       <div class="sec-title">
         <p class="kicker">Services &amp; Pricing</p>
-        <p class="en serif">Brow <em>&amp;</em> Lip</p>
+        <p class="en">Brow <em>&amp;</em> Lip</p>
         <p class="ko" data-i18n="svKo">지역 물가를 반영해 국가·지역별 가격을 분리해 안내합니다</p>
       </div>
 
@@ -93,38 +97,55 @@
           <p class="ko-name" data-i18n="browKo">눈썹 반영구</p>
           <div class="price-rows">
             <div class="price-row">
-              <span class="name">머신 자연눈썹<small>Machine hair-stroke · 120분 · 4주 내 리터치 무료</small></span>
+              <span class="name">머신 자연눈썹<small>Machine hair-stroke · 120분</small></span>
               <span class="price"><span class="region">SEOUL</span>₩ 320,000</span>
             </div>
             <div class="price-row">
-              <span class="name">콤보 눈썹<small>Combo shading + strokes · 140분 · 4주 내 리터치 무료</small></span>
+              <span class="name">콤보 눈썹<small>Combo shading + strokes · 140분</small></span>
               <span class="price"><span class="region">SEOUL</span>₩ 380,000</span>
             </div>
             <div class="price-row">
-              <span class="name">머신 자연눈썹<small>도쿄 출장 · 120분 · 출장 일정 내 리터치 1회</small></span>
-              <span class="price"><span class="region">TOKYO</span>¥ 38,000</span>
+              <span class="name">머신 자연눈썹<small>일본 순회 팝업 · 120분</small></span>
+              <span class="price"><span class="region">JAPAN</span>¥ 38,000</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="service-card">
-        <figure><img src="assets/img/lip-closeup.jpg" alt="입술 반영구 시술 후 클로즈업" loading="lazy" style="object-position:50% 68%;"></figure>
+      <div class="service-card has-notice">
+        <figure><img class="img-lip" src="assets/img/lip-closeup.jpg" alt="입술 반영구 시술 후 클로즈업" loading="lazy"></figure>
         <div>
           <h3 class="serif">Lip</h3>
           <p class="ko-name" data-i18n="lipKo">입술 반영구</p>
           <div class="price-rows">
             <div class="price-row">
-              <span class="name">립 블러셔<small>Lip blusher · 150분 · 4주 내 리터치 무료</small></span>
+              <span class="name">립 블러셔<small>Lip blusher · 150분</small></span>
               <span class="price"><span class="region">SEOUL</span>₩ 420,000</span>
             </div>
             <div class="price-row">
-              <span class="name">립 블러셔<small>도쿄 출장 · 150분 · 출장 일정 내 리터치 1회</small></span>
-              <span class="price"><span class="region">TOKYO</span>¥ 45,000</span>
+              <span class="name">립 블러셔<small>일본 순회 팝업 · 150분</small></span>
+              <span class="price"><span class="region">JAPAN</span>¥ 45,000</span>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- 립 시술 필수 공지 : 기본 접힘 -->
+      <details class="notice-block">
+        <summary>
+          <span class="notice-tag">NOTICE</span>
+          <span data-i18n="darkLipTitle">다크립 시술 안내</span>
+          <span class="icon" aria-hidden="true"></span>
+        </summary>
+        <div class="notice-body" data-i18n="darkLipBody">
+          <p>다크립은 입술의 어두운 정도와 색소 반응에 따라 필요한 시술 횟수가 달라집니다.</p>
+          <p>다크립이 심하지 않은 경우 1회 시술만으로도 충분한 개선이 가능하지만, 어두운 정도가 심한 경우에는 1회만으로 완벽하게 개선하기 어렵습니다.</p>
+          <p>1회 시술 후 눈에 띄게 밝아질 수는 있으나, 개인에 따라 3~4회 이상 중화 시술이 필요할 수 있습니다.</p>
+          <p>따라서 완벽한 개선을 원하시는 분은 처음부터 여러 차례 방문이 필요할 수 있다는 점을 꼭 염두에 두고 예약해 주세요.</p>
+          <p>단 한 번의 시술로 완벽한 변화를 기대하기보다, 현재 입술보다 자연스럽고 건강해 보이는 정도의 개선을 원하시는 분이라면 언제든 환영합니다☺️</p>
+          <p class="notice-foot">※ 시술 횟수와 결과는 개인의 입술 상태, 색소 침착 정도, 피부 반응에 따라 달라질 수 있습니다.</p>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -133,7 +154,7 @@
     <div class="wrap">
       <div class="sec-title">
         <p class="kicker">Portfolio</p>
-        <p class="en serif">Own Your <em>Brows</em></p>
+        <p class="en">Own Your <em>Brows</em></p>
         <p class="ko" data-i18n="pfKo">모델 공개 동의를 받은 사진만 게재합니다</p>
       </div>
 
@@ -156,7 +177,7 @@
     <div class="wrap">
       <div class="sec-title">
         <p class="kicker" data-i18n="faqKicker">자주 묻는 질문</p>
-        <p class="en serif">Q <em>&amp;</em> A</p>
+        <p class="en">Q <em>&amp;</em> A</p>
       </div>
 
       <div class="faq-panel">
@@ -176,52 +197,27 @@
           <h3>
             <button class="faq-q" aria-expanded="false" aria-controls="faq-a2">
               <span class="q-mark" aria-hidden="true">Q.</span>
-              <span data-i18n="q2">리터치는 언제, 어떻게 진행되나요?</span>
+              <span data-i18n="q2">해외에서도 예약할 수 있나요?</span>
               <span class="icon" aria-hidden="true"></span>
             </button>
           </h3>
           <div class="faq-a" id="faq-a2">
-            <p data-i18n="a2">1차 시술 후 4주 이내 리터치는 무료로 진행됩니다. 도쿄 출장의 경우 다음 출장 일정에 맞춰 리터치 예약을 안내드립니다.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <h3>
-            <button class="faq-q" aria-expanded="false" aria-controls="faq-a3">
-              <span class="q-mark" aria-hidden="true">Q.</span>
-              <span data-i18n="q3">해외에서도 예약할 수 있나요?</span>
-              <span class="icon" aria-hidden="true"></span>
-            </button>
-          </h3>
-          <div class="faq-a" id="faq-a3">
-            <p data-i18n="a3">영어·일본어·중국어 상담이 가능하며, WhatsApp·LINE·WeChat 중 편한 채널로 예약 조건을 안내해 드립니다.</p>
+            <p data-i18n="a2">네, 가능합니다. 다만 상담은 한국어로만 진행됩니다. 원하시는 스타일 사진과 번역 기능을 함께 활용하면 상담과 시술 진행에 대부분 문제가 없습니다. 소통이 많이 어려운 경우에는 예약일 4일 전까지 요청해 주시면 통역사를 준비해 드립니다(시간당 30,000원).</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TOKYO -->
-  <section id="tokyo" class="tokyo">
+  <!-- JAPAN POP-UP : 도시별 순회 일정 (카드는 assets/js/main.js 의 JAPAN_CITIES 배열로 생성) -->
+  <section id="japan" class="japan">
     <div class="wrap">
       <div class="sec-title">
         <p class="kicker">Japan Pop-up</p>
-        <p class="en serif">Tokyo <em>Schedule</em></p>
+        <p class="en">Japan Pop-up <em>Schedule</em></p>
       </div>
-      <div class="tokyo-band">
-        <div class="bg" aria-hidden="true"></div>
-        <div class="tokyo-band-inner">
-          <div>
-            <span class="badge"><span class="dot" aria-hidden="true"></span>RESERVATION OPEN</span>
-            <h3 class="serif">TOKYO POP-UP</h3>
-            <div class="date-row">
-              <span class="date">2026.09.10 — 09.15</span>
-              <span class="loc-chip">시부야 인근</span>
-            </div>
-            <p data-i18n="tokyoNote">정확한 장소는 예약금 확인 후 안내드립니다.</p>
-          </div>
-          <a href="#" class="btn btn-glass" style="padding:11px 24px; font-size:13px;" data-i18n="tokyoBtn">LINE으로 문의</a>
-        </div>
-      </div>
+      <div class="city-grid" data-city-grid></div>
+      <p class="japan-note" data-i18n="japanNote">정확한 장소는 예약금 확인 후 안내드립니다.</p>
     </div>
   </section>
 
@@ -230,7 +226,7 @@
     <div class="wrap">
       <div class="sec-title">
         <p class="kicker">Reservation</p>
-        <p class="en serif">How to <em>Book</em></p>
+        <p class="en">How to <em>Book</em></p>
       </div>
 
       <div class="resv-notice">
@@ -273,7 +269,7 @@
       </div>
       <div class="loc-info">
         <p class="kicker">Location</p>
-        <p class="serif" style="font-size:clamp(26px,3.4vw,34px); color:var(--ink); margin:10px 0 0;">Seoul Studio</p>
+        <p class="loc-title serif">Seoul Studio</p>
         <dl>
           <dt data-i18n="locAddr">주소</dt><dd data-i18n="locAddrV">서울특별시 (상세 주소 확정 예정)</dd>
           <dt data-i18n="locHours">운영시간</dt><dd data-i18n="locHoursV">화–토 11:00–19:00 · 완전 예약제</dd>
@@ -295,7 +291,7 @@
       <a href="#about">소개</a>
       <a href="#services">시술 · 가격</a>
       <a href="#portfolio">포트폴리오</a>
-      <a href="#tokyo">일본 출장</a>
+      <a href="#japan">일본 출장</a>
       <a href="#reservation">예약 안내</a>
     </nav>
     <div class="footer-bottom">
@@ -321,7 +317,7 @@
       <a href="#" class="channel-row" data-ch="wechat"><span>WeChat</span><span class="country">中文</span></a>
     </div>
     <div class="modal-steps">
-      <span data-i18n="modalSteps">문의 → 일정 확인 → <strong>예약금 입금(계좌/PayPal)</strong> → 입금 확인 후 <strong>예약 확정</strong><br>리터치 및 주의사항은 확정 시 함께 안내드립니다.</span>
+      <span data-i18n="modalSteps">문의 → 일정 확인 → <strong>예약금 입금(계좌/PayPal)</strong> → 입금 확인 후 <strong>예약 확정</strong><br>시술 주의사항은 확정 시 함께 안내드립니다.</span>
     </div>
   </div>
 </div>
