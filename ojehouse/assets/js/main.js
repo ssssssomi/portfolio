@@ -1,21 +1,45 @@
 (function(){
 // ===== 설정: 일본 팝업 섹션 전체 on/off (일정이 하나도 없으면 false → 섹션·내비 자동 숨김) =====
-var SHOW_TOKYO = true;
+var SHOW_JAPAN = true;
 
 // ===== 일본 순회 팝업 도시 =====
 // ▼▼▼ 일정 수정 위치 — 아래 배열만 고치면 카드가 그대로 반영됩니다 ▼▼▼
-//   name   : 카드에 표시할 영문 도시명 (디스플레이 폰트 적용)
+//   name   : 카드에 표시할 영문 도시명 (디스플레이 폰트 적용 · 모든 언어 공통)
+//   key    : 아래 I18N 사전의 도시명 키 (영문명 밑에 언어별 표기로 표시)
 //   date   : 확정 일정 문자열. 미확정이면 빈 문자열('') → "일정 조율 중"으로 표시
 //   status : 'open' → RESERVATION OPEN / 'soon' → COMING SOON
-//   show   : false 로 두면 해당 도시 카드만 숨김 (섹션 전체는 위의 SHOW_TOKYO 로 제어)
-// ※ 현재 날짜는 모두 임시값입니다. 확정 일정으로 교체하세요.
+//   show   : false 로 두면 해당 도시 카드만 숨김 (섹션 전체는 위의 SHOW_JAPAN 으로 제어)
+// ※ 카드는 배열에 적은 순서대로 나옵니다 — 순회 날짜순으로 유지하세요.
+// ※ 2026년 8·9월 출장은 4개 도시 모두 확정. 다음 출장에서 미정 도시가 생기면
+//    date: '' / status: 'soon' 으로 두면 COMING SOON 카드로 표시됩니다.
 var JAPAN_CITIES = [
-  { name: 'Tokyo',   date: '2026.09.10 — 09.15', status: 'open', show: true },
-  { name: 'Osaka',   date: '2026.09.18 — 09.21', status: 'open', show: true },
-  { name: 'Fukuoka', date: '',                   status: 'soon', show: true },
-  { name: 'Nagoya',  date: '',                   status: 'soon', show: true }
+  { name: 'Fukuoka', key: 'cityFukuoka', date: '2026.08.24 — 08.25', status: 'open', show: true },
+  { name: 'Osaka',   key: 'cityOsaka',   date: '2026.08.26 — 08.27', status: 'open', show: true },
+  { name: 'Nagoya',  key: 'cityNagoya',  date: '2026.09.13 — 09.15', status: 'open', show: true },
+  { name: 'Tokyo',   key: 'cityTokyo',   date: '2026.09.16 — 09.18', status: 'open', show: true }
 ];
 // ▲▲▲ 일정 수정 위치 ▲▲▲
+
+// ===== 네이버 지도 설정 =====
+// ▼▼▼ 지도 수정 위치 — 아래 값만 채우면 지도가 그대로 반영됩니다 ▼▼▼
+//   keyId    : 네이버 클라우드 플랫폼 > Maps > 인증 정보의 Key.
+//              콘솔 > Application 등록 시 사용 도메인(예: https://ojehouse.com)을 반드시 등록해야 합니다.
+//              ※ 비워두면 지도 대신 주소 + 네이버 지도 링크(.map-fallback)가 표시됩니다.
+//   keyParam : 발급 시점에 따라 키 파라미터 이름이 다릅니다.
+//              최신 키 → 'ncpKeyId' / 예전에 발급받은 키 → 'ncpClientId'
+//   lat/lng  : 스튜디오 좌표. 네이버 지도에서 해당 위치 우클릭 > '좌표 복사'로 확인할 수 있습니다.
+//   placeUrl : '크게 보기' 링크 주소. 네이버플레이스 등록 후에는
+//              https://map.naver.com/p/entry/place/{플레이스ID} 형태로 바꾸는 편이 정확합니다.
+var NAVER_MAP = {
+  keyId: '',
+  keyParam: 'ncpKeyId',
+  lat: 37.5665,
+  lng: 126.9780,
+  zoom: 16,
+  title: '오제하우스',
+  placeUrl: 'https://map.naver.com/p/search/' + encodeURIComponent('오제하우스')
+};
+// ▲▲▲ 지도 수정 위치 ▲▲▲
 
 // ===== 다국어 사전 (기획서 08: 검수 번역문 전환 방식) =====
 var I18N = {
@@ -28,8 +52,11 @@ var I18N = {
     quote: '"눈썹 한 올의 방향과 입술의 경계선, 그 미세한 차이가 얼굴 전체의 인상을 바꿉니다."',
     f1k: '운영 형태', f1v: '1인 시술자 · 완전 예약제',
     f2k: '취급 시술', f2v: '눈썹 반영구, 입술 반영구',
-    f3k: '운영 지역', f3v: '서울 매장, 일본 순회 팝업(도쿄·오사카·후쿠오카·나고야)',
+    f3k: '운영 지역', f3v: '서울 매장, 일본 순회 팝업(후쿠오카·오사카·나고야·도쿄)',
     f4k: '상담 언어', f4v: '한국어 상담만 가능 · 사진/번역으로 진행 · 통역사 요청 가능',
+    artistKo: '상담부터 시술 마무리까지, 한 사람이 직접 진행합니다',
+    artistRole: '오제하우스 대표 · 반영구 아티스트',
+    artistBio: '얼굴의 균형과 피부 톤을 먼저 읽고, 그 사람에게 어울리는 결과 색을 찾아갑니다. 유행하는 모양을 그대로 올리기보다 원래 그 자리에 있던 것처럼 보이는 눈썹과 입술을 지향합니다.<br><br>상담, 디자인, 시술, 마무리 안내까지 모든 과정을 직접 진행하기 때문에 하루에 받는 예약 수를 제한해 운영하고 있습니다.',
     svKo: '지역 물가를 반영해 국가·지역별 가격을 분리해 안내합니다',
     browKo: '눈썹 반영구', lipKo: '입술 반영구',
     darkLipTitle: '다크립 시술 안내',
@@ -48,6 +75,7 @@ var I18N = {
     q2: '해외에서도 예약할 수 있나요?',
     a2: '네, 가능합니다. 다만 상담은 한국어로만 진행됩니다. 원하시는 스타일 사진과 번역 기능을 함께 활용하면 상담과 시술 진행에 대부분 문제가 없습니다. 소통이 많이 어려운 경우에는 예약일 4일 전까지 요청해 주시면 통역사를 준비해 드립니다(시간당 30,000원).',
     japanNote: '정확한 장소는 예약금 확인 후 안내드립니다.',
+    cityFukuoka: '후쿠오카', cityOsaka: '오사카', cityNagoya: '나고야', cityTokyo: '도쿄',
     cityTba: '일정 조율 중',
     cityBtn: '문의하기',
     cityBtnSoon: '오픈 알림 문의',
@@ -59,7 +87,7 @@ var I18N = {
     locHours: '운영시간', locHoursV: '화–토 11:00–19:00 · 완전 예약제',
     locOff: '휴무', locOffV: '매주 일·월요일',
     locAsk: '문의', locAskV: '카카오채널 · 네이버플레이스',
-    locMap: '구글 지도에서 크게 보기 →',
+    locMap: '네이버 지도에서 크게 보기 →',
     modalDesc: '현재 온라인 예약 시스템은 준비 중입니다.<br>편하신 채널로 문의해 주시면 일정과 예약금 안내를 도와드립니다.',
     modalSteps: '문의 → 일정 확인 → <strong>예약금 입금(계좌/PayPal)</strong> → 입금 확인 후 <strong>예약 확정</strong><br>시술 주의사항은 확정 시 함께 안내드립니다.',
     external: '채널 선택 시 외부 서비스로 이동합니다.',
@@ -74,8 +102,11 @@ var I18N = {
     quote: '"The direction of a single brow hair, the border of the lips — these subtle differences change the entire impression."',
     f1k: 'Studio', f1v: 'Single artist · By appointment only',
     f2k: 'Services', f2v: 'Brow PMU, Lip PMU',
-    f3k: 'Locations', f3v: 'Seoul studio, Japan pop-up tour (Tokyo · Osaka · Fukuoka · Nagoya)',
+    f3k: 'Locations', f3v: 'Seoul studio, Japan pop-up tour (Fukuoka · Osaka · Nagoya · Tokyo)',
     f4k: 'Consultation', f4v: 'Korean only · Photos & translation apps · Interpreter available on request',
+    artistKo: 'One artist handles everything, from the consultation to the final touch.',
+    artistRole: 'Founder · Permanent Makeup Artist, OJEHOUSE',
+    artistBio: 'Reading the balance of your face and your skin tone first, then finding the shape and colour that suit you. Rather than copying whatever shape is trending, the aim is brows and lips that look as if they were always there.<br><br>Consultation, design, the procedure and aftercare guidance are all handled personally, so the number of appointments taken per day is kept deliberately small.',
     svKo: 'Prices are listed separately by country and region.',
     browKo: 'Eyebrow Permanent Makeup', lipKo: 'Lip Permanent Makeup',
     darkLipTitle: 'Important Notice — Dark Lip Correction',
@@ -94,6 +125,8 @@ var I18N = {
     q2: 'Can I book from overseas?',
     a2: 'Yes. Please note that consultations are conducted in Korean only. With reference photos and a translation app, the consultation and the procedure itself go smoothly in almost every case. If communication is still difficult, let us know at least 4 days before your appointment and we will arrange an interpreter (KRW 30,000 per hour).',
     japanNote: 'The exact venue is shared after deposit confirmation.',
+    // 영문에서는 카드 상단 영문 도시명과 겹치므로 비워 둔다 (.city-local:empty → 숨김)
+    cityFukuoka: '', cityOsaka: '', cityNagoya: '', cityTokyo: '',
     cityTba: 'DATES TBA',
     cityBtn: 'Contact',
     cityBtnSoon: 'Notify me',
@@ -105,7 +138,7 @@ var I18N = {
     locHours: 'Hours', locHoursV: 'Tue–Sat 11:00–19:00 · By appointment',
     locOff: 'Closed', locOffV: 'Sunday & Monday',
     locAsk: 'Contact', locAskV: 'WhatsApp · Instagram',
-    locMap: 'View larger map on Google Maps →',
+    locMap: 'View larger map on Naver Map →',
     modalDesc: 'Online booking is coming soon.<br>Contact us via your preferred channel for dates and deposit guidance.',
     modalSteps: 'Inquiry → Date check → <strong>Deposit (bank/PayPal)</strong> → <strong>Confirmed</strong> after verification.<br>Aftercare instructions are shared upon confirmation.',
     external: 'Selecting a channel opens an external service.',
@@ -120,8 +153,11 @@ var I18N = {
     quote: '「眉一本の流れ、唇の輪郭線。その繊細な差が、顔全体の印象を変えます。」',
     f1k: '運営形態', f1v: '施術者1名 · 完全予約制',
     f2k: '施術内容', f2v: '眉アートメイク、リップアートメイク',
-    f3k: 'エリア', f3v: 'ソウル店舗、日本巡回ポップアップ（東京・大阪・福岡・名古屋）',
+    f3k: 'エリア', f3v: 'ソウル店舗、日本巡回ポップアップ（福岡・大阪・名古屋・東京）',
     f4k: 'カウンセリング', f4v: '韓国語のみ · 写真と翻訳アプリで対応 · 通訳の手配可',
+    artistKo: 'カウンセリングから仕上げまで、1人の施術者が直接担当します。',
+    artistRole: 'オジェハウス代表 · アートメイクアーティスト',
+    artistBio: '顔のバランスと肌のトーンをまず読み取り、その方に似合う形と色を探していきます。流行の形をそのまま乗せるのではなく、もとからそこにあったように見える眉とリップを目指しています。<br><br>カウンセリング・デザイン・施術・アフターケアのご案内まですべて自分で行うため、1日にお受けするご予約数を制限して運営しています。',
     svKo: '国・地域ごとに料金を分けてご案内しています。',
     browKo: '眉アートメイク', lipKo: 'リップアートメイク',
     darkLipTitle: 'ダークリップ施術のご案内',
@@ -140,6 +176,7 @@ var I18N = {
     q2: '海外からでも予約できますか？',
     a2: 'はい、可能です。ただし、カウンセリングは韓国語のみで行っております。ご希望のデザイン写真と翻訳アプリを併用すれば、カウンセリングも施術もほとんどの場合問題なく進められます。意思疎通が難しい場合は、ご予約日の4日前までにお申し付けいただければ通訳者を手配いたします（1時間あたり30,000ウォン）。',
     japanNote: '正確な場所は予約金確認後にご案内します。',
+    cityFukuoka: '福岡', cityOsaka: '大阪', cityNagoya: '名古屋', cityTokyo: '東京',
     cityTba: '日程調整中',
     cityBtn: 'お問い合わせ',
     cityBtnSoon: '日程のお知らせ希望',
@@ -151,7 +188,7 @@ var I18N = {
     locHours: '営業時間', locHoursV: '火–土 11:00–19:00 · 完全予約制',
     locOff: '定休日', locOffV: '日曜・月曜',
     locAsk: 'お問い合わせ', locAskV: 'LINE · Instagram',
-    locMap: 'Googleマップで大きく見る →',
+    locMap: 'NAVERマップで大きく見る →',
     modalDesc: 'オンライン予約は準備中です。<br>ご都合の良いチャンネルからお問い合わせください。',
     modalSteps: 'お問い合わせ → 日程確認 → <strong>予約金のお支払い（振込/PayPal）</strong> → 確認後<strong>予約確定</strong><br>施術の注意事項は確定時にご案内します。',
     external: 'チャンネル選択で外部サービスに移動します。',
@@ -166,8 +203,11 @@ var I18N = {
     quote: '"一根眉毛的走向、唇部的轮廓线，这些细微的差别足以改变整张脸的印象。"',
     f1k: '经营形式', f1v: '一人技师 · 完全预约制',
     f2k: '服务项目', f2v: '眉部半永久、唇部半永久',
-    f3k: '服务地区', f3v: '首尔门店、日本巡回快闪（东京·大阪·福冈·名古屋）',
+    f3k: '服务地区', f3v: '首尔门店、日本巡回快闪（福冈·大阪·名古屋·东京）',
     f4k: '咨询语言', f4v: '仅限韩语 · 借助照片与翻译工具沟通 · 可申请翻译人员',
+    artistKo: '从咨询到收尾，全程由同一位技师亲自完成。',
+    artistRole: 'OJEHOUSE 主理人 · 半永久艺术师',
+    artistBio: '先读懂脸部的平衡与肤色，再寻找适合本人的形状与颜色。比起照搬流行的眉型，更希望做出像本来就长在那里一样自然的眉毛与唇色。<br><br>咨询、设计、操作到术后说明都由本人亲自完成，因此每天接待的预约数量会有所限制。',
     svKo: '根据各国家/地区物价分别标示价格。',
     browKo: '眉部半永久', lipKo: '唇部半永久',
     darkLipTitle: '暗唇（黑唇）改善须知',
@@ -186,6 +226,7 @@ var I18N = {
     q2: '在海外也可以预约吗？',
     a2: '可以。不过咨询仅以韩语进行。配合参考照片与翻译工具，咨询和操作在绝大多数情况下都能顺利进行。若沟通确实困难，请在预约日的4天前提出申请，我们可为您安排翻译人员（每小时30,000韩元）。',
     japanNote: '确切地点将在确认定金后告知。',
+    cityFukuoka: '福冈', cityOsaka: '大阪', cityNagoya: '名古屋', cityTokyo: '东京',
     cityTba: '日程协调中',
     cityBtn: '咨询',
     cityBtnSoon: '日程开放通知',
@@ -197,7 +238,7 @@ var I18N = {
     locHours: '营业时间', locHoursV: '周二–周六 11:00–19:00 · 完全预约制',
     locOff: '休息日', locOffV: '每周日、周一',
     locAsk: '咨询', locAskV: 'WeChat · Instagram',
-    locMap: '在谷歌地图中查看 →',
+    locMap: '在 NAVER 地图中查看 →',
     modalDesc: '在线预约系统正在筹备中。<br>请通过方便的渠道咨询，我们将为您安排日程与定金事宜。',
     modalSteps: '咨询 → 确认日程 → <strong>支付定金（转账/PayPal）</strong> → 确认后<strong>预约确定</strong><br>操作注意事项将在确定时一并告知。',
     external: '选择渠道后将跳转至外部服务。',
@@ -207,8 +248,6 @@ var I18N = {
 // 기획서 04·08: 언어별 핵심 CTA 분기
 var PRIMARY = { ko: 'naver', en: 'whatsapp', ja: 'line', zh: 'wechat' };
 var LANG_CODE = { ko: 'ko', en: 'en', ja: 'ja', zh: 'zh-Hans' };
-// 구글 지도 임베드가 인식하는 hl 코드 (LANG_CODE와 표기가 달라 별도 관리)
-var MAP_HL = { ko: 'ko', en: 'en', ja: 'ja', zh: 'zh-CN' };
 
 // 일본 팝업 도시 카드 생성 — 텍스트는 data-i18n 으로 표시해 언어 전환에 그대로 따라간다
 function renderCities() {
@@ -218,7 +257,10 @@ function renderCities() {
     var open = c.status === 'open';
     return '<article class="city-card ' + (open ? 'is-open' : 'is-soon') + '">' +
       '<span class="city-pin" aria-hidden="true"></span>' +
-      '<p class="city-name">' + c.name + '</p>' +
+      '<div class="city-names">' +
+        '<p class="city-name">' + c.name + '</p>' +
+        '<p class="city-local" data-i18n="' + (c.key || '') + '">' + (I18N.ko[c.key] || '') + '</p>' +
+      '</div>' +
       (c.date
         ? '<p class="city-date">' + c.date + '</p>'
         : '<p class="city-date" data-i18n="cityTba">' + I18N.ko.cityTba + '</p>') +
@@ -237,12 +279,6 @@ function applyLang(lang) {
     var key = el.getAttribute('data-i18n');
     if (d[key] !== undefined) el.innerHTML = d[key];
   });
-  // 지도 라벨도 선택한 언어로 맞춘다 (src가 실제로 바뀔 때만 재로드)
-  var map = document.querySelector('.map-embed');
-  if (map) {
-    var next = map.src.replace(/([?&]hl=)[^&]*/, '$1' + MAP_HL[lang]);
-    if (next !== map.src) map.src = next;
-  }
   // 채널 정렬: 해당 언어 핵심 채널을 맨 위로 + 추천 배지
   document.querySelectorAll('[data-channels]').forEach(function(list) {
     var rows = Array.from(list.querySelectorAll('[data-ch]'));
@@ -260,6 +296,61 @@ function applyLang(lang) {
   });
 }
 
+// ===== 네이버 지도 =====
+// 키가 없거나 스크립트 로딩·인증에 실패하면 지도를 감추고 주소 안내(.map-fallback)로 대체한다.
+function showMapFallback() {
+  var el = document.getElementById('naverMap');
+  var fb = document.querySelector('.map-fallback');
+  if (el) el.hidden = true;
+  if (fb) fb.hidden = false;
+}
+
+function initNaverMap() {
+  var el = document.getElementById('naverMap');
+  if (!el) return;
+
+  // '크게 보기' 링크는 설정값 하나로 본문·대체 화면 모두 맞춘다
+  document.querySelectorAll('[data-map-link]').forEach(function(a) {
+    if (NAVER_MAP.placeUrl) a.href = NAVER_MAP.placeUrl;
+  });
+
+  if (!NAVER_MAP.keyId) { showMapFallback(); return; }
+
+  // 인증 실패(도메인 미등록·키 오류)는 네이버 API가 이 전역 함수로 알려준다
+  window.navermap_authFailure = showMapFallback;
+
+  var s = document.createElement('script');
+  s.src = 'https://oapi.map.naver.com/openapi/v3/maps.js?' +
+    encodeURIComponent(NAVER_MAP.keyParam) + '=' + encodeURIComponent(NAVER_MAP.keyId);
+  s.async = true;
+  s.onerror = showMapFallback;
+  s.onload = function() {
+    if (!window.naver || !naver.maps) { showMapFallback(); return; }
+    var center = new naver.maps.LatLng(NAVER_MAP.lat, NAVER_MAP.lng);
+    // 터치 기기에서 드래그를 열어두면 지도가 페이지 스크롤을 가로채므로 고정한다.
+    // 데스크톱도 휠 줌은 끄고(스크롤 가로채기 방지) 확대/축소는 컨트롤로만 하게 둔다.
+    var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    var map = new naver.maps.Map(el, {
+      center: center,
+      zoom: NAVER_MAP.zoom,
+      scrollWheel: false,
+      draggable: !coarse,
+      pinchZoom: !coarse,
+      disableDoubleTapZoom: coarse,
+      scaleControl: false,
+      mapDataControl: false,
+      zoomControl: true,
+      zoomControlOptions: {
+        position: naver.maps.Position.TOP_RIGHT,
+        style: naver.maps.ZoomControlStyle.SMALL
+      }
+    });
+    new naver.maps.Marker({ position: center, map: map, title: NAVER_MAP.title });
+  };
+  document.head.appendChild(s);
+}
+initNaverMap();
+
 document.querySelectorAll('.lang-switch button').forEach(function(btn) {
   btn.addEventListener('click', function() {
     document.querySelectorAll('.lang-switch button').forEach(function(b) { b.setAttribute('aria-pressed', 'false'); });
@@ -269,7 +360,7 @@ document.querySelectorAll('.lang-switch button').forEach(function(btn) {
 });
 
 // 일본 팝업 섹션 토글 (기획서 09: 일정 없으면 비노출)
-if (SHOW_TOKYO) {
+if (SHOW_JAPAN) {
   renderCities();
 } else {
   var s = document.getElementById('japan');

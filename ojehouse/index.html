@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="color-scheme" content="light" />
 <title>오제하우스 — 눈썹·입술 반영구 스튜디오</title>
-<meta name="description" content="1인 시술자가 운영하는 반영구 화장 스튜디오. 서울 매장과 일본 순회 팝업(도쿄·오사카·후쿠오카·나고야)으로 눈썹, 입술 반영구를 제공합니다. 예약은 채널 문의로 안내드립니다." />
+<meta name="description" content="1인 시술자가 운영하는 반영구 화장 스튜디오. 서울 매장과 일본 순회 팝업(후쿠오카·오사카·나고야·도쿄)으로 눈썹, 입술 반영구를 제공합니다. 예약은 채널 문의로 안내드립니다." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +38,9 @@
     <div class="hero-bg" role="img" aria-label="핑크 튤 원단 텍스처"></div>
     <div class="hero-text">
       <p class="kicker-top">Seoul · Japan — Permanent Makeup</p>
-      <a href="#top" class="hero-logo">Ojehouse</a>
+      <a href="#top" class="hero-logo" aria-label="오제하우스 홈">
+        <img src="assets/img/logo-white.png" alt="오제하우스" width="1000" height="1483" />
+      </a>
       <h1 class="visually-hidden">오제하우스 — 눈썹·입술 반영구 스튜디오</h1>
       <p class="sub-ko" data-i18n="heroSub">반영구 눈썹·입술 디자인이 완성될 때,<br>진짜 당신이 시작됩니다</p>
       <div class="hero-actions">
@@ -74,9 +76,39 @@
         <ul class="about-facts">
           <li><strong data-i18n="f1k">운영 형태</strong><span data-i18n="f1v">1인 시술자 · 완전 예약제</span></li>
           <li><strong data-i18n="f2k">취급 시술</strong><span data-i18n="f2v">눈썹 반영구, 입술 반영구</span></li>
-          <li><strong data-i18n="f3k">운영 지역</strong><span data-i18n="f3v">서울 매장, 일본 순회 팝업(도쿄·오사카·후쿠오카·나고야)</span></li>
+          <li><strong data-i18n="f3k">운영 지역</strong><span data-i18n="f3v">서울 매장, 일본 순회 팝업(후쿠오카·오사카·나고야·도쿄)</span></li>
           <li><strong data-i18n="f4k">상담 언어</strong><span data-i18n="f4v">한국어 상담만 가능 · 사진/번역으로 진행 · 통역사 요청 가능</span></li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTIST : 사장님(1인 시술자) 소개
+       사진 교체 위치 — 프로필 1장(.artist-portrait), 시술 사진 2장(.artist-work).
+       세 장 모두 세로(4:5) 박스이므로 세로 사진을 그대로 넣으면 됩니다.
+       이름(.artist-name)과 직함(artistRole)은 임시값이므로 실제 표기로 바꿔 주세요. -->
+  <section id="artist" class="artist">
+    <div class="wrap">
+      <div class="sec-title">
+        <p class="kicker">Artist</p>
+        <p class="en">Meet the <em>Artist</em></p>
+        <p class="ko" data-i18n="artistKo">상담부터 시술 마무리까지, 한 사람이 직접 진행합니다</p>
+      </div>
+
+      <div class="artist-grid">
+        <div class="artist-text">
+          <p class="artist-name">OJE</p>
+          <p class="artist-role" data-i18n="artistRole">오제하우스 대표 · 반영구 아티스트</p>
+          <p class="artist-bio" data-i18n="artistBio">얼굴의 균형과 피부 톤을 먼저 읽고, 그 사람에게 어울리는 결과 색을 찾아갑니다. 유행하는 모양을 그대로 올리기보다 원래 그 자리에 있던 것처럼 보이는 눈썹과 입술을 지향합니다.<br><br>상담, 디자인, 시술, 마무리 안내까지 모든 과정을 직접 진행하기 때문에 하루에 받는 예약 수를 제한해 운영하고 있습니다.</p>
+        </div>
+        <figure class="artist-portrait">
+          <img src="assets/img/oje-ceo-profil02.JPG" alt="오제하우스 시술자 프로필 사진" loading="lazy">
+        </figure>
+      </div>
+
+      <div class="artist-work">
+        <figure><img src="assets/img/oje-ceo01.JPG" alt="스튜디오에서 반영구 시술을 진행하는 모습" loading="lazy"><figcaption>IN SESSION</figcaption></figure>
+        <figure class="aw2"><img src="assets/img/oje-ceo02.JPG" alt="눈썹 반영구 디자인을 그리는 모습" loading="lazy"><figcaption>BROW DESIGN</figcaption></figure>
       </div>
     </div>
   </section>
@@ -257,15 +289,16 @@
   <!-- LOCATION -->
   <section id="location" class="location">
     <div class="wrap loc-grid">
-      <!-- 지도: 상세 주소 확정 시 아래 두 URL의 q= 값만 실제 주소로 교체하면 됩니다. -->
+      <!-- 지도: 네이버 지도 JS API v3.
+           인증 키 · 좌표 · 네이버 지도 링크는 assets/js/main.js 상단의 NAVER_MAP 설정에서 한 번에 수정합니다.
+           키가 비어 있거나 로딩·인증에 실패하면 아래 .map-fallback 이 대신 표시됩니다. -->
       <div class="map-frame">
-        <iframe
-          class="map-embed"
-          src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C&z=12&hl=ko&output=embed"
-          title="오제하우스 서울 스튜디오 위치 지도"
-          loading="lazy"
-          allowfullscreen
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div id="naverMap" class="map-embed" role="region" aria-label="오제하우스 서울 스튜디오 위치 지도"></div>
+        <!-- 오른쪽 정보 패널에 주소와 '크게 보기' 링크가 이미 있으므로 여기서는 반복하지 않는다 -->
+        <div class="map-fallback" hidden>
+          <span class="map-fallback-pin" aria-hidden="true"></span>
+          <p class="map-fallback-addr" data-i18n="locAddrV">서울특별시 (상세 주소 확정 예정)</p>
+        </div>
       </div>
       <div class="loc-info">
         <p class="kicker">Location</p>
@@ -276,8 +309,8 @@
           <dt data-i18n="locOff">휴무</dt><dd data-i18n="locOffV">매주 일·월요일</dd>
           <dt data-i18n="locAsk">문의</dt><dd data-i18n="locAskV">카카오채널 · 네이버플레이스</dd>
         </dl>
-        <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C"
-           target="_blank" rel="noopener noreferrer" data-i18n="locMap">구글 지도에서 크게 보기 →</a>
+        <a class="map-link" data-map-link href="https://map.naver.com/p/search/%EC%98%A4%EC%A0%9C%ED%95%98%EC%9A%B0%EC%8A%A4"
+           target="_blank" rel="noopener noreferrer" data-i18n="locMap">네이버 지도에서 크게 보기 →</a>
       </div>
     </div>
   </section>
@@ -286,9 +319,12 @@
 
 <footer class="site">
   <div class="wrap">
-    <a href="#top" class="footer-logo">OJEHOUSE</a>
+    <a href="#top" class="footer-logo" aria-label="오제하우스 홈">
+      <img src="assets/img/logo-ink.png" alt="오제하우스" width="1000" height="1483" loading="lazy" decoding="async" />
+    </a>
     <nav class="footer-nav" aria-label="푸터 메뉴">
       <a href="#about">소개</a>
+      <a href="#artist">아티스트</a>
       <a href="#services">시술 · 가격</a>
       <a href="#portfolio">포트폴리오</a>
       <a href="#japan">일본 출장</a>
@@ -300,7 +336,7 @@
   </div>
 </footer>
 
-<button type="button" class="to-top" id="toTop" aria-label="맨 위로 이동">↑</button>
+<button type="button" class="to-top" id="toTop" aria-label="맨1 위로 이동">↑</button>
 
 <!-- 예약 안내 모달 (입력 폼 없음 — 채널 안내) -->
 <div class="modal-backdrop" id="resvModal">

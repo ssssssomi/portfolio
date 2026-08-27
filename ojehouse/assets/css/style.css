@@ -47,6 +47,10 @@ body{
   color:var(--ink);
   font-family:'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
   font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;
+  /* 줄바꿈은 글자 단위가 아니라 단어(어절) 단위로 — 문서 전체에 상속된다.
+     한 단어가 줄 폭보다 길 때만 overflow-wrap 이 예외적으로 끊어 넘침을 막는다. */
+  word-break:keep-all;
+  overflow-wrap:break-word;
 }
 a{ color:inherit; } img{ max-width:100%; display:block; } button{ font-family:inherit; cursor:pointer; }
 :focus-visible{ outline:2px solid var(--rose-deep); outline-offset:3px; border-radius:4px; }
@@ -127,16 +131,23 @@ header.site{
   text-transform:uppercase; color:rgba(255,255,255,0.95);
   margin:0 0 26px; text-shadow:0 1px 10px rgba(150,105,72,0.35);
 }
-/* 로고 — 디스플레이 폰트. Italiana는 획이 얇아 자간을 넓게 잡아야 균형이 맞습니다. */
+/* 로고 — 세로형 로고 이미지. 튤 배경 위에 얹히므로 화이트 버전을 쓰고,
+   폭이 아닌 높이(뷰포트 높이 기준)로 크기를 잡아 화면이 낮아도 잘리지 않게 한다. */
 .hero-logo{
-  font-family:var(--font-display); font-weight:400;
-  /* Italiana는 Cormorant보다 가로폭이 넓어, 좁은 화면에서 넘치지 않도록
-     하한을 고정값 대신 vw 기울기(15vw)로 잡는다 */
-  font-size:clamp(46px, 15vw, 168px);
-  letter-spacing:var(--display-track); line-height:1;
-  text-decoration:none; color:#fff; display:block;
-  margin:0 0 30px; padding-left:var(--display-track); /* 자간이 만든 우측 여백 보정 */
-  text-shadow:0 2px 30px rgba(150,105,72,0.4);
+  display:block; line-height:0;
+  margin:0 0 30px;
+  transition:opacity .2s var(--ease);
+}
+.hero-logo img{
+  display:block; width:auto; max-width:100%;
+  height:clamp(140px, 30vh, 290px);
+  margin:0 auto;
+  filter:drop-shadow(0 2px 26px rgba(150,105,72,0.42));
+}
+.hero-logo:hover{ opacity:.9; }
+/* 낮은 뷰포트(가로 모드 등)에서 CTA가 접히지 않도록 로고 주변 여백을 줄인다 */
+@media (max-height:720px){
+  .hero-logo{ margin-bottom:18px; }
 }
 .hero .sub-ko{
   font-size:clamp(14.5px,1.9vw,16.5px); line-height:1.8;
@@ -182,6 +193,16 @@ section{ padding:104px 0; position:relative; }
 .intro{ text-align:center; padding-bottom:76px; }
 .intro .sec-title{ margin-bottom:22px; }
 .intro .copy{ max-width:520px; margin:0 auto; font-size:15px; color:var(--ink-soft); }
+/* 인트로 카피는 두 문장 = 두 줄을 유지한다. 좁은 화면에서 첫 문장이 접혀 3줄이 되지 않도록
+   줄바꿈을 막고(<br> 은 그대로 동작) 글자 크기를 화면 폭에 맞춰 줄인다.
+   29 = 첫 문장의 글자 폭 합(약 28.2em)에 여유를 더한 값. 48px 은 .wrap 좌우 패딩.
+   문장 길이가 언어마다 크게 달라 한국어에만 적용한다. */
+@media (max-width:760px){
+  html[lang="ko"] .intro .copy{
+    white-space:nowrap;
+    font-size:min(15px, calc((100vw - 48px) / 29));
+  }
+}
 .intro .divider{ width:1px; height:56px; background:var(--line-strong); margin:36px auto 0; }
 
 /* ===== About ===== */
@@ -203,11 +224,69 @@ section{ padding:104px 0; position:relative; }
 }
 .about-facts{ list-style:none; margin:0; padding:0; }
 .about-facts li{
-  display:flex; gap:16px; font-size:14.5px; color:var(--ink-soft);
+  display:flex; 
+  gap:16px; 
+  font-size:14.5px; color:var(--ink-soft);
   padding:13px 0; border-bottom:1px solid var(--line);
 }
 .about-facts li:first-child{ border-top:1px solid var(--line); }
 .about-facts strong{ color:var(--ink); font-weight:600; min-width:96px; flex-shrink:0; }
+
+/* ===== Artist — 사장님(1인 시술자) 소개 =====
+   위쪽: 소개 문구 + 프로필 1장, 아래쪽: 시술 장면 2장.
+   사진은 모두 세로(4:5) 박스이며 캡션 스타일은 포트폴리오와 공유한다. */
+.artist{ background:linear-gradient(180deg, rgba(246,241,234,0.55), rgba(255,255,255,0.55)); }
+.artist-grid{
+  display:grid; grid-template-columns:1fr 0.78fr; gap:clamp(30px,5vw,64px);
+  align-items:center;
+}
+/* 그리드 칸이 사진·긴 문장의 최소 폭에 밀려 넓어지지 않게 한다(모바일 가로 스크롤 방지) */
+.artist-grid > *, .artist-work figure{ min-width:0; }
+@media (max-width:860px){ .artist-grid{ grid-template-columns:1fr; } }
+.artist-name{
+  font-family:var(--font-display); font-weight:400;
+  font-size:clamp(30px,4vw,42px); line-height:1.1; letter-spacing:var(--display-track);
+  color:var(--ink); margin:0 0 8px;
+}
+.artist-role{
+  display:flex; align-items:center; gap:10px;
+  font-size:14.5px; font-weight:600; color:var(--rose-deep); margin:0 0 22px;
+}
+.artist-role::before{ content:""; width:14px; height:1px; background:var(--rose-deep); flex-shrink:0; }
+.artist-bio{ font-size:14.5px; color:var(--ink-soft); margin:0; }
+
+/* 프로필 — 세로 1장 */
+.artist-portrait{
+  margin:0; overflow:hidden; border-radius:var(--radius);
+  box-shadow:0 16px 44px rgba(140,105,80,0.16);
+}
+.artist-portrait img{ width:100%; aspect-ratio:4/5; object-fit:cover; object-position:50% 22%; }
+@media (max-width:860px){
+  /* 1단으로 접히면 프로필이 너무 커지므로 폭을 묶어 가운데 정렬 */
+  .artist-portrait{ max-width:420px; margin:0 auto; }
+  .artist-work{ margin-left:auto; margin-right:auto; }
+}
+
+/* 시술 사진 — 세로 2장을 어긋나게(스태거) 두어 대각선 흐름을 만든다.
+   왼쪽 사진은 위로 올라와 소개 문구 아래 여백을 채우고, 오른쪽 사진은 .aw2 만큼 내려간다.
+   블록을 오른쪽에 맞춰 두 번째 사진이 위쪽 프로필과 같은 축·같은 폭으로 떨어지게 한다. */
+.artist-work{
+  display:grid; grid-template-columns:1fr 1fr; gap:clamp(14px,2.5vw,26px);
+  align-items:start;
+  max-width:880px; margin:clamp(18px,3vw,34px) 0 0 auto;
+}
+.artist-work .aw2{ margin-top:clamp(30px,6vw,76px); }
+.artist-work figure{ margin:0; position:relative; overflow:hidden; border-radius:var(--radius); }
+.artist-work img{
+  width:100%; aspect-ratio:4/5; object-fit:cover; object-position:50% 50%;
+  transition:transform .5s var(--ease);
+}
+.artist-work figure:hover img{ transform:scale(1.03); }
+@media (max-width:560px){
+  /* 2단으로 두면 세로 사진이 썸네일처럼 작아지므로 한 장씩 세로로 쌓고 엇갈림은 해제 */
+  .artist-work{ grid-template-columns:1fr; max-width:420px; gap:14px; }
+  .artist-work .aw2{ margin-top:0; }
+}
 
 /* ===== Services ===== */
 .services{ background:linear-gradient(180deg, rgba(245,235,224,0.3), rgba(243,227,213,0.6) 55%, rgba(243,229,217,0.35)); }
@@ -278,7 +357,7 @@ section{ padding:104px 0; position:relative; }
 .notice-body{ padding:0 clamp(18px,3vw,26px) 24px; }
 .notice-body p{
   margin:0 0 12px; font-size:13.5px; line-height:1.8;
-  color:var(--ink-soft); word-break:keep-all;
+  color:var(--ink-soft);
 }
 .notice-body p:last-child{ margin-bottom:0; }
 .notice-body .notice-foot{
@@ -292,7 +371,8 @@ section{ padding:104px 0; position:relative; }
 .pf-grid figure{ margin:0; overflow:hidden; border-radius:var(--radius); position:relative; }
 .pf-grid img{ width:100%; height:100%; object-fit:cover; transition:transform .5s var(--ease); }
 .pf-grid figure:hover img{ transform:scale(1.03); }
-.pf-grid figcaption{
+.pf-grid figcaption,
+.artist-work figcaption{
   position:absolute; left:12px; bottom:10px;
   font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.1em;
   color:#fff; background:rgba(110,88,68,0.45); padding:5px 10px; border-radius:999px;
@@ -308,7 +388,7 @@ section{ padding:104px 0; position:relative; }
 .pf-grid .p-note .en{
   font-family:'Cormorant Garamond',serif; font-style:italic; font-size:20px; color:var(--rose-deep);
 }
-.pf-grid .p-note .ko{ font-size:13.5px; color:var(--ink-soft); max-width:380px; }
+.pf-grid .p-note .ko{min-width:fit-content; font-size:13.5px; color:var(--ink-soft); max-width:380px; }
 @media (max-width:760px){
   .pf-grid{ grid-auto-rows:36px; gap:10px; }
   .pf-grid .p1{ grid-column:1/8; grid-row:span 7; }
@@ -355,7 +435,7 @@ section{ padding:104px 0; position:relative; }
 .faq-q .icon::after{ width:1px; height:14px; }
 .faq-q[aria-expanded="true"] .icon::after{ opacity:0; transform:translate(-50%,-50%) rotate(90deg); }
 .faq-a{ overflow:hidden; max-height:0; transition:max-height .3s var(--ease); }
-.faq-a p{ margin:0 0 24px; padding:0 4px 0 40px; color:var(--ink-soft); font-size:14px; line-height:1.75; word-break:keep-all; }
+.faq-a p{ margin:0 0 24px; padding:0 4px 0 40px; color:var(--ink-soft); font-size:14px; line-height:1.75; }
 
 /* ===== Japan Pop-up — 도시별 순회 카드 ===== */
 .japan{ background:linear-gradient(180deg, rgba(255,255,255,0.7), rgba(246,241,234,0.4)); }
@@ -384,12 +464,19 @@ section{ padding:104px 0; position:relative; }
   width:9px; height:9px; border-radius:50%;
   background:var(--rose-deep); box-shadow:0 0 0 4px rgba(255,255,255,0.9);
 }
+.city-names{ display:flex; flex-direction:column; align-items:center; gap:4px; }
 .city-name{
   font-family:var(--font-display); font-weight:400;
   font-size:clamp(25px,2.8vw,32px); line-height:1.1;
   letter-spacing:var(--display-track);
   color:var(--ink); margin:0; padding-left:var(--display-track);
 }
+/* 언어별 도시명(한국어·일본어·중국어). 영문은 값이 비어 있어 자동으로 숨겨진다 */
+.city-local{
+  font-size:12.5px; font-weight:600; letter-spacing:.02em;
+  color:var(--rose-deep); margin:0;
+}
+.city-local:empty{ display:none; }
 .city-date{
   font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:.03em;
   color:var(--ink); margin:0;
@@ -418,6 +505,7 @@ section{ padding:104px 0; position:relative; }
 .city-card.is-soon{ background:rgba(255,255,255,0.34); }
 .city-card.is-soon .city-pin{ background:var(--ink-faint); }
 .city-card.is-soon .city-name{ color:var(--ink-soft); }
+.city-card.is-soon .city-local{ color:var(--ink-faint); }
 .city-card.is-soon .city-date{ color:var(--ink-faint); }
 .city-card.is-soon .city-status{
   background:rgba(74,65,56,0.05); border-color:var(--line-strong); color:var(--ink-faint);
@@ -442,7 +530,8 @@ section{ padding:104px 0; position:relative; }
     gap:8px 12px; text-align:left; padding:18px 20px;
   }
   .city-card .city-pin{ grid-area:1 / 1; }
-  .city-card .city-name{ grid-area:1 / 2; padding-left:0; }
+  .city-card .city-names{ grid-area:1 / 2; align-items:flex-start; gap:2px; }
+  .city-card .city-name{ padding-left:0; }
   .city-card .city-status{ grid-area:1 / 3; justify-self:end; margin:0; }
   .city-card .city-date{ grid-area:2 / 2 / 2 / 4; }
   .city-card .city-btn{ grid-area:3 / 1 / 3 / 4; }
@@ -501,9 +590,22 @@ section{ padding:104px 0; position:relative; }
 }
 .map-embed{
   display:block; width:100%; aspect-ratio:16/11; border:0;
-  /* 구글 지도 기본 채도를 낮춰 페이지의 웜톤 팔레트와 어울리게 */
-  filter:saturate(0.72) contrast(0.96) sepia(0.12);
+  /* 네이버 지도 기본 채도를 낮춰 페이지의 웜톤 팔레트와 어울리게 */
+  filter:saturate(0.78) contrast(0.97) sepia(0.1);
 }
+.map-embed[hidden]{ display:none; }
+/* 지도 대체 화면 — 인증 키 미설정 · 스크립트 로딩 실패 시 */
+.map-fallback{
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:6px; width:100%; aspect-ratio:16/11; padding:24px; text-align:center;
+}
+.map-fallback[hidden]{ display:none; }
+.map-fallback-pin{
+  width:14px; height:14px; border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg); background:var(--rose);
+  box-shadow:0 4px 12px rgba(179,131,98,0.35);
+}
+.map-fallback-addr{ margin:10px 0 0; font-size:14px; color:var(--ink-soft); }
 .map-link{
   display:inline-block; margin-top:22px; font-size:13px; letter-spacing:.02em;
   color:var(--rose-deep); text-decoration:none; border-bottom:1px solid rgba(179,131,98,0.4);
@@ -521,12 +623,20 @@ footer.site{
   padding:56px 0 36px; text-align:center;
   border-top:1px solid var(--line);
 }
-/* 푸터 로고 — 디스플레이 폰트 + 넓은 자간 */
+/* 푸터 로고 — 밝은 푸터 배경에 맞춘 잉크 버전(히어로는 화이트 버전).
+   이미지에 OJEHOUSE 워드마크가 포함돼 있어 별도 텍스트를 두지 않는다. */
 .footer-logo{
-  font-family:var(--font-display); font-size:30px; font-weight:400;
-  letter-spacing:.32em; color:var(--ink); text-decoration:none;
-  display:inline-block; margin-left:.32em; /* 자간 보정 */
+  display:inline-block; line-height:0; text-decoration:none;
+  transition:opacity .2s var(--ease);
 }
+.footer-logo img{
+  display:block; width:auto; max-width:100%;
+  /* 모바일에서 로고가 과하게 커 보이지 않도록 최소 높이를 낮춘다.
+     약 510px 이하부터 9vw 대신 46px 고정 — 데스크톱 크기는 그대로. */
+  height:clamp(46px, 9vw, 84px);
+  margin:0 auto;
+}
+.footer-logo:hover{ opacity:.72; }
 .footer-nav{ margin:22px 0 30px; }
 .footer-nav a{ text-decoration:none; font-size:13.5px; color:var(--ink-soft); margin:0 14px; }
 .footer-nav a:hover{ color:var(--rose-deep); }
@@ -567,6 +677,5 @@ footer.site{
 .modal-steps{
   background:var(--bg); border-radius:var(--radius-s); padding:16px 18px;
   font-size:12.5px; color:var(--ink-soft); line-height:1.8;
-  word-break:keep-all;
 }
 .modal-steps strong{ color:var(--rose-deep); font-weight:600; }
