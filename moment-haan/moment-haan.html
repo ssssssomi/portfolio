@@ -422,6 +422,10 @@ ul,ol{list-style:none}
   .footer-grid{grid-template-columns:1fr}
   .curation-info{padding:20px 56px 18px 20px}
   .slider-dots{display:none}
+  /* 탭은 가로 스크롤 없이 한 줄에 고정 (터치로 밀리지 않도록) */
+  .tabs{overflow-x:hidden;gap:0;touch-action:pan-y;overscroll-behavior-x:none}
+  .tabs button{flex:1 1 0;min-width:0;padding:11px 2px;font-size:12px;letter-spacing:-.02em;text-align:center;white-space:nowrap}
+  .tabs button::after{left:4px;right:4px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none !important;animation:none !important}
