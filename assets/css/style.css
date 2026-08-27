@@ -25,6 +25,27 @@ html{height:100%;scroll-snap-type:y proximity;overflow-y:scroll;overflow-x:hidde
 body{background:var(--bg);color:var(--fg);font-family:var(--kr);height:100%;overflow-x:hidden}
 a,button{text-decoration:none}
 
+/* ══ 한글 줄바꿈 ══
+   한글은 어절(공백) 단위로 끊어야 읽힌다. 세 가지를 함께 건다.
+   - word-break:keep-all        어절 중간에서 잘리지 않게
+   - overflow-wrap:break-word   URL·영문 같은 예외적으로 긴 토큰만 강제 분리
+   - text-wrap:pretty           마지막 줄에 한 어절만 남는 고아 줄(orphan) 방지
+   지원하지 않는 브라우저는 앞의 두 속성만 적용되고 레이아웃은 그대로다. */
+.about-quote,.work-detail-text,.a11y-badge-text,
+.side-title,.side-lede,.side-desc,
+.ai-title,.ai-desc,.ai-sub,.ai-card-desc,.ai-mine-desc,.ai-quote,
+.contact-h{
+  word-break:keep-all;
+  overflow-wrap:break-word;
+  text-wrap:pretty;
+}
+
+/* 뜻이 붙어 있는 구절을 한 덩어리로 묶는 유틸.
+   inline-block이라 자리가 모자라면 구절 통째로 다음 줄로 내려가고,
+   덩어리 안에서는 끊기지 않는다. PC→모바일 어느 폭에서도
+   "맡았고," 같은 한 어절짜리 줄이 생기지 않게 하는 장치다. */
+.nb{display:inline-block}
+
 /* 커스텀 커서는 마우스가 있는 환경에서만. JS가 죽거나 터치 기기면 기본 커서를 유지한다 */
 @media(hover:hover) and (pointer:fine){
   body.has-cursor,body.has-cursor a,body.has-cursor button,
@@ -116,7 +137,9 @@ body:not(.has-cursor) #cur-ring{display:none}
 .nav-center a:hover::after{width:100%}
 
 /* PAGE BASE */
-.page{width:100vw;height:100vh;scroll-snap-align:start;position:relative;overflow:hidden}
+/* 모바일 브라우저는 주소창이 접히고 펴지면서 100vh가 실제 보이는 높이보다 크다.
+   그만큼 섹션 아래가 잘리므로 dvh를 쓰고, 미지원 브라우저는 위 vh 선언을 그대로 쓴다. */
+.page{width:100%;height:100vh;height:100dvh;scroll-snap-align:start;position:relative;overflow:hidden}
 
 /* PAGE DOTS */
 .pg-ind{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:700;display:flex;flex-direction:column;gap:12px;align-items:center}
@@ -289,11 +312,14 @@ body:not(.has-cursor) #cur-ring{display:none}
   .hero-h1{font-size:clamp(36px,12vw,64px);letter-spacing:-.03em}
   .hero-tag{font-size:9px;letter-spacing:.14em}
   .hero-scroll{display:none}
-  .hero-stats{bottom:clamp(90px,15vh,140px);gap:18px}
-  .hero-stat-num{font-size:clamp(18px,5.5vw,26px)}
-  .hero-nav{top:auto;bottom:clamp(84px,14vh,130px);transform:none;gap:2px}
+  /* 모바일에서는 네비(우) · 스탯(좌) · 연락처(우)가 아래쪽에 겹겹이 쌓인다.
+     예전엔 네비 84px, 스탯 90px로 바닥 기준이 거의 같아 좁은 화면(320px)에서
+     "12 SKILLS"와 "Contact"가 서로 겹쳤다. 세 덩어리의 높이만큼 층을 벌린다. */
+  .hero-nav{top:auto;bottom:clamp(158px,24vh,206px);transform:none;gap:2px}
   .hero-nav a{font-size:clamp(18px,6vw,28px)}
-  .hero-bottom{bottom:clamp(32px,6vh,60px);right:var(--hero-gap)}
+  .hero-stats{bottom:clamp(92px,13vh,124px);gap:clamp(14px,4vw,24px)}
+  .hero-stat-num{font-size:clamp(18px,5.5vw,26px)}
+  .hero-bottom{bottom:clamp(28px,5vh,52px);right:var(--hero-gap)}
   .hero-contacts a{font-size:10px}
   /* 모바일은 좌우 비네트를 빼고 위아래만 눌러준다 */
   #p1::after{
@@ -364,10 +390,10 @@ body:not(.has-cursor) #cur-ring{display:none}
 
 /* ══ PAGE 2 — ABOUT ══ */
 /* 데스크톱에서도 높이가 낮으면 내용이 잘렸다. 고정 100vh 대신 최소 높이로 */
-#p2{background:var(--bg);height:auto;min-height:100vh}
+#p2{background:var(--bg);height:auto;min-height:100vh;min-height:100dvh}
 .about-layout{
   position:relative;z-index:10;
-  min-height:100vh;
+  min-height:100vh;min-height:100dvh;
   padding:88px 8% 56px;
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -394,6 +420,11 @@ body:not(.has-cursor) #cur-ring{display:none}
 }
 .about-quote strong{font-weight:700}
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 32px}
+/* 왼쪽 열은 오른쪽(Education·Experience·Skills)보다 짧아서 아래가 크게 비었다.
+   이름·연락처를 바닥으로 내려 두 열의 아래 끝을 맞추면 여백이 의도한 것처럼 읽힌다. */
+@media(min-width:769px){
+  .about-intro .info-grid{margin-top:auto}
+}
 .info-block h3{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg3);margin-bottom:10px}
 .info-block ul{list-style:none}
 .info-block li{font-size:12px;color:var(--fg2);line-height:1.9;position:relative;padding-left:12px}
@@ -449,8 +480,8 @@ body:not(.has-cursor) #cur-ring{display:none}
 
 /* ══ PAGE 3 — PROJECTS (아코디언) ══ */
 #p3{background:var(--bg)}
-#p3{height:auto;min-height:100vh;overflow-y:auto}
-.works-wrap{padding:96px 7% 56px;display:flex;flex-direction:column;min-height:100vh}
+#p3{height:auto;min-height:100vh;min-height:100dvh;overflow-y:auto}
+.works-wrap{padding:96px 7% 56px;display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
 .works-head{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:18px}
 .works-title{font-family:var(--syne);font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
 .works-count{font-family:var(--mono);font-size:11px;color:var(--fg3);letter-spacing:.06em}
@@ -459,7 +490,13 @@ body:not(.has-cursor) #cur-ring{display:none}
 
 /* 아코디언 행 */
 .work-item{border-bottom:1px solid var(--line);position:relative}
+/* 프로젝트명은 문서 구조상 제목이다. h3는 뼈대만 쓰고 크기·굵기는 .w-name이 정한다 */
+.work-head{margin:0;font:inherit}
 .work-row{
+  /* 진짜 <button>이라 브라우저 기본 스타일을 먼저 지운다 */
+  appearance:none;-webkit-appearance:none;
+  background:none;border:0;color:inherit;font:inherit;
+  width:100%;text-align:left;
   display:grid;
   grid-template-columns:44px 1fr 160px;
   align-items:center;gap:0;
@@ -491,11 +528,19 @@ body:not(.has-cursor) #cur-ring{display:none}
    grid 1fr 전환이면 실제 내용 높이만큼만 정확히 열린다. */
 .work-detail{
   display:grid;grid-template-rows:0fr;
-  transition:grid-template-rows .45s cubic-bezier(.25,.46,.45,.94),opacity .35s;
   opacity:0;
+  /* 접힌 본문은 눈에만 안 보이는 게 아니라 접근성 트리에서도 빠져야 한다.
+     안 그러면 스크린리더가 닫힌 프로젝트 10개의 설명을 전부 읽는다.
+     visibility는 지연으로만 제어한다 — 닫을 때는 접히는 애니메이션이 끝난 뒤(.45s),
+     열 때는 지연 0으로 즉시 보이게. */
+  visibility:hidden;
+  transition:grid-template-rows .45s cubic-bezier(.25,.46,.45,.94),opacity .35s,visibility 0s .45s;
 }
 .work-detail>*{overflow:hidden;min-height:0}
-.work-item.open .work-detail{grid-template-rows:1fr;opacity:1}
+.work-item.open .work-detail{
+  grid-template-rows:1fr;opacity:1;visibility:visible;
+  transition:grid-template-rows .45s cubic-bezier(.25,.46,.45,.94),opacity .35s,visibility 0s 0s;
+}
 /* 세로 패딩·여백은 열릴 때만 준다. 닫힌 상태에서 남아 있으면
    0fr 트랙이어도 패딩만큼(약 40px) 행 사이가 벌어진다. */
 .work-detail-inner{
@@ -533,7 +578,7 @@ body:not(.has-cursor) #cur-ring{display:none}
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ══ PAGE 4 — PERSONAL (직접 만든 사이트) ══ */
-#p6{background:var(--bg);height:auto;min-height:100vh;overflow-y:auto}
+#p6{background:var(--bg);height:auto;min-height:100vh;min-height:100dvh;overflow-y:auto}
 
 /* 화면에는 숨기고 스크린리더에만 읽히는 텍스트 */
 .visually-hidden{
@@ -544,7 +589,7 @@ body:not(.has-cursor) #cur-ring{display:none}
 }
 
 .side-wrap{
-  min-height:100vh;
+  min-height:100vh;min-height:100dvh;
   padding:88px 8% 60px;
   display:flex;flex-direction:column;gap:28px;
   position:relative;z-index:10;
@@ -692,7 +737,7 @@ body:not(.has-cursor) #cur-ring{display:none}
 }
 
 /* ══ PAGE 4 — WORKLIST (퍼블리싱 워크리스트 & 가이드) ══ */
-#p7{background:var(--bg);height:auto;min-height:100vh;overflow-y:auto}
+#p7{background:var(--bg);height:auto;min-height:100vh;min-height:100dvh;overflow-y:auto}
 
 /* 화면 / 컴포넌트 링크 목록 */
 .wl-lists{
@@ -748,10 +793,10 @@ body:not(.has-cursor) #cur-ring{display:none}
 }
 
 /* ══ PAGE 5 — AI WORKFLOW ══ */
-#p5{background:var(--bg);height:auto;min-height:100vh;overflow-y:auto}
+#p5{background:var(--bg);height:auto;min-height:100vh;min-height:100dvh;overflow-y:auto}
 
 .ai-wrap{
-  min-height:100vh;
+  min-height:100vh;min-height:100dvh;
   padding:88px 8% 60px;
   display:flex;flex-direction:column;gap:32px;
   position:relative;z-index:10;
@@ -994,7 +1039,7 @@ a.cinfo-val:hover{border-color:#fff}
     grid-template-columns:1fr;
     column-gap:0;
     padding:80px 24px 48px;
-    min-height:100vh;
+    min-height:100vh;min-height:100dvh;
   }
   .about-intro{grid-column:1;padding-top:0;justify-content:flex-start}
   .about-quote{font-size:15px;line-height:1.75;margin-bottom:24px;word-break:keep-all}
@@ -1017,7 +1062,7 @@ a.cinfo-val:hover{border-color:#fff}
   .a11y-badge{padding:6px 12px 6px 7px;gap:7px}
   .a11y-badge-text{font-size:10px}
 
-  #p4{height:auto;min-height:100vh;overflow-y:auto}
+  #p4{height:auto;min-height:100vh;min-height:100dvh;overflow-y:auto}
   .contact-inner{padding:100px 24px 120px;justify-content:flex-start;height:auto}
   .contact-tag{margin-bottom:24px}
   .contact-h{font-size:clamp(28px,10vw,52px);margin-bottom:32px}

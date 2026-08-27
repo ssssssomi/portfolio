@@ -155,8 +155,9 @@ if(FINE_POINTER && !REDUCE){
 }
 
 /* ══ 9. ACCORDION ══
-   role="button"이 붙은 div이므로 Enter/Space도 직접 처리하고
-   aria-expanded로 열림 상태를 스크린리더에 알린다. */
+   .work-row는 진짜 <button>이라 Enter/Space는 브라우저가 click으로 바꿔 준다.
+   여기서 keydown을 또 잡으면 Space 한 번에 두 번 토글된다.
+   상태는 aria-expanded로 알리고, 어떤 본문이 열렸는지는 aria-controls가 가리킨다. */
 function toggleWork(row){
   const item=row.closest('.work-item');
   const willOpen=!item.classList.contains('open');
@@ -169,12 +170,6 @@ function toggleWork(row){
 }
 document.querySelectorAll('.work-row').forEach(row=>{
   row.addEventListener('click',()=>toggleWork(row));
-  row.addEventListener('keydown',e=>{
-    if(e.key==='Enter'||e.key===' '){
-      e.preventDefault();
-      toggleWork(row);
-    }
-  });
 });
 
 /* ══ 10. PAGE SWEEP on dot click ══

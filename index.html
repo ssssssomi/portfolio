@@ -10,14 +10,22 @@
 <meta property="og:title" content="소미경 — Web Publisher Portfolio">
 <meta property="og:description" content="웹퍼블리셔 소미경 포트폴리오. 금융·헬스케어 분야 10개 프로젝트, 웹접근성 인증 취득, 퍼블리싱 가이드와 직접 만든 웹 도구를 정리했습니다.">
 <meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://ssssssomi.github.io/portfolio/">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://ssssssomi.github.io/portfolio/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23060606'/%3E%3Ctext x='16' y='23' font-family='Helvetica,Arial' font-size='20' font-weight='bold' fill='%23e8e4dc' text-anchor='middle'%3Ep%3C/text%3E%3C/svg%3E">
+<!-- 폰트는 외부 도메인 3곳에서 온다. preconnect로 DNS·TLS를 미리 열어 첫 텍스트 표시를 앞당긴다 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Syne+Mono&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+<!-- 버전을 고정한다. 태그 없이 받으면 배포 시점의 최신본이 내려와 본문 폰트가 예고 없이 바뀔 수 있다 -->
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
 <link rel="stylesheet" href="./assets/css/style.css">
 
 </head>
 <body>
-<a class="skip-link" href="#p2">본문 바로가기</a>
+<a class="skip-link" href="#main">본문 바로가기</a>
 <div id="grain"></div>
 <div id="cur-dot"></div>
 <div id="cur-ring"></div>
@@ -25,7 +33,7 @@
 
 
 
-<nav id="mainNav">
+<nav id="mainNav" aria-label="주요 메뉴">
   <div class="nav-contact">Seoul, Korea / 2026</div>
   <ul class="nav-center">
     <li><a href="#p1" data-target="p1">Home</a></li>
@@ -48,8 +56,10 @@
   <button type="button" class="pg-line" data-i="6" aria-label="07 Contact"><span class="pg-num" aria-hidden="true">07</span></button>
 </nav>
 
+<main id="main" tabindex="-1">
+
 <!-- PAGE 1 -->
-<section class="page" id="p1">
+<section class="page" id="p1" aria-labelledby="heroTitle">
 
   <canvas id="hero3d" aria-hidden="true"></canvas>
 
@@ -111,18 +121,18 @@
 </section>
 
 <!-- PAGE 2 -->
-<section class="page" id="p2">
+<section class="page" id="p2" aria-labelledby="p2-title">
   <div class="about-layout">
     <div class="about-intro">
       <div class="about-section-tag rv d1">
         <div class="tag-line"></div>
-        <h2 class="tag-txt">02 — About</h2>
+        <h2 class="tag-txt" id="p2-title">02 — About</h2>
       </div>
       <p class="about-quote rv d2">
-        열정적인 태도와 원활한 소통으로 함께 일하고 싶은,<br>
-        지속적인 학습과 성장을 추구하는,<br>
-        유연한 사고로 협업하는<br>
-        <strong>웹퍼블리셔 소미경</strong>입니다.
+        <span class="nb">열정적인 태도와 원활한 소통으로</span> <span class="nb">함께 일하고 싶은,</span><br>
+        <span class="nb">지속적인 학습과 성장을 추구하는,</span><br>
+        <span class="nb">유연한 사고로 협업하는</span><br>
+        <span class="nb"><strong>웹퍼블리셔 소미경</strong>입니다.</span>
       </p>
       <div class="info-grid rv d3">
         <div class="info-block">
@@ -200,24 +210,26 @@
 </section>
 
 <!-- PAGE 3 : 아코디언 프로젝트 -->
-<section class="page" id="p3">
+<section class="page" id="p3" aria-labelledby="p3-title">
   <div class="works-wrap">
     <div class="works-head rv d1">
-      <h2 class="works-title">03 — Project</h2>
+      <h2 class="works-title" id="p3-title">03 — Project</h2>
       <span class="works-count">10 Projects</span>
     </div>
     <div class="works-list">
 
       <!-- 01 -->
       <div class="work-item rv d2">
-        <div class="work-row" role="button" tabindex="0" aria-expanded="false">
-          <span class="w-idx">01</span>
-          <span class="w-name">SKT 마케팅 플랫폼 프로젝트</span>
-          <span class="w-period">2021.04 — 2021.11</span>
-          <span class="w-client">SKT · 2021.04–11</span>
-          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        </div>
-        <div class="work-detail">
+        <h3 class="work-head">
+          <button type="button" class="work-row" aria-expanded="false" aria-controls="wd-01">
+            <span class="w-idx">01</span>
+            <span class="w-name">SKT 마케팅 플랫폼 프로젝트</span>
+            <span class="w-period">2021.04 — 2021.11</span>
+            <span class="w-client">SKT · 2021.04–11</span>
+            <span class="w-toggle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+        </h3>
+        <div class="work-detail" id="wd-01">
           <div class="work-detail-inner">
             <div class="work-detail-tag">기여 내용</div>
             <div class="work-detail-text">다수의 협력업체와 함께한 대규모 마케팅 플랫폼 프로젝트로, 신규 페이지 퍼블리싱 및 기존 화면 유지보수를 담당했습니다. Zeplin을 활용해 디자이너와 협업하며 디자인 시안을 픽셀 단위로 구현했고, 반응형 레이아웃 구현과 크로스 브라우징 대응을 수행했습니다.</div>
@@ -230,14 +242,16 @@
 
       <!-- 02 -->
       <div class="work-item rv d2" style="transition-delay:.14s">
-        <div class="work-row" role="button" tabindex="0" aria-expanded="false">
-          <span class="w-idx">02</span>
-          <span class="w-name">KB국민은행 기관전용플랫폼</span>
-          <span class="w-period">2021.12</span>
-          <span class="w-client">KB국민은행 · 2021.12</span>
-          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        </div>
-        <div class="work-detail">
+        <h3 class="work-head">
+          <button type="button" class="work-row" aria-expanded="false" aria-controls="wd-02">
+            <span class="w-idx">02</span>
+            <span class="w-name">KB국민은행 기관전용플랫폼</span>
+            <span class="w-period">2021.12</span>
+            <span class="w-client">KB국민은행 · 2021.12</span>
+            <span class="w-toggle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+        </h3>
+        <div class="work-detail" id="wd-02">
           <div class="work-detail-inner">
             <div class="work-detail-tag">기여 내용</div>
             <div class="work-detail-text">KB국민은행 기관전용 서비스 확장 프로젝트에서 신규 기능 화면의 마크업 및 스타일 작업을 담당했습니다. 금융 서비스 특성에 맞는 웹 접근성(WCAG) 기준을 준수하며 구현했습니다.</div>
@@ -250,20 +264,22 @@
 
       <!-- 03 -->
       <div class="work-item rv d3">
-        <div class="work-row" role="button" tabindex="0" aria-expanded="false">
-          <span class="w-idx">03</span>
-          <span class="w-name">한국투자증권 2차 리뉴얼</span>
-          <span class="w-period">2022.04 — 2022.08</span>
-          <span class="w-client">한국투자증권 · 2022.04–08</span>
-          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        </div>
-        <div class="work-detail">
+        <h3 class="work-head">
+          <button type="button" class="work-row" aria-expanded="false" aria-controls="wd-03">
+            <span class="w-idx">03</span>
+            <span class="w-name">한국투자증권 2차 리뉴얼</span>
+            <span class="w-period">2022.04 — 2022.08</span>
+            <span class="w-client">한국투자증권 · 2022.04–08</span>
+            <span class="w-toggle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+        </h3>
+        <div class="work-detail" id="wd-03">
           <div class="work-detail-inner">
             <div class="work-detail-tag">기여 내용</div>
             <div class="work-detail-text">한국투자증권 웹사이트 2차 전면 리뉴얼에서 레거시 마크업을 시맨틱 HTML5 + SCSS 구조로 재구축했습니다. 복잡한 금융 데이터 테이블 UI 및 탭·아코디언 컴포넌트 구현을 주도했습니다. 재구축 단계부터 WCAG 기준을 마크업에 반영해, <strong>웹접근성 심사를 받아 인증 마크를 취득했습니다.</strong></div>
             <div class="a11y-badge">
               <span class="a11y-badge-mark" aria-hidden="true">WA</span>
-              <span class="a11y-badge-text">웹접근성 심사 통과 · 인증 마크 취득</span>
+              <span class="a11y-badge-text"><span class="nb">웹접근성 심사 통과 ·</span> <span class="nb">인증 마크 취득</span></span>
             </div>
             <div class="work-detail-chips">
               <span class="detail-chip">HTML5</span><span class="detail-chip">SCSS</span><span class="detail-chip">JavaScript</span><span class="detail-chip">컴포넌트</span><span class="detail-chip">웹접근성</span>
@@ -274,14 +290,16 @@
 
       <!-- 04 -->
       <div class="work-item rv d3" style="transition-delay:.28s">
-        <div class="work-row" role="button" tabindex="0" aria-expanded="false">
-          <span class="w-idx">04</span>
-          <span class="w-name">나이스지키미 UI/UX 고도화</span>
-          <span class="w-period">2022.08</span>
-          <span class="w-client">나이스지키미 · 2022.08</span>
-          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        </div>
-        <div class="work-detail">
+        <h3 class="work-head">
+          <button type="button" class="work-row" aria-expanded="false" aria-controls="wd-04">
+            <span class="w-idx">04</span>
+            <span class="w-name">나이스지키미 UI/UX 고도화</span>
+            <span class="w-period">2022.08</span>
+            <span class="w-client">나이스지키미 · 2022.08</span>
+            <span class="w-toggle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+        </h3>
+        <div class="work-detail" id="wd-04">
           <div class="work-detail-inner">
             <div class="work-detail-tag">기여 내용</div>
             <div class="work-detail-text">나이스지키미 서비스 UI/UX 고도화 프로젝트에서 Figma 디자인 시안을 기반으로 전체 화면 퍼블리싱을 진행했습니다. 사용자 경험 개선을 위한 컴포넌트 재설계 및 인터랙션 구현에 집중했습니다.</div>
@@ -294,14 +312,16 @@
 
       <!-- 05 -->
       <div class="work-item rv d4">
-        <div class="work-row" role="button" tabindex="0" aria-expanded="false">
-          <span class="w-idx">05</span>
-          <span class="w-name">네티브 캠페인 발송 기능 구현</span>
-          <span class="w-period">2022.08 — 2022.09</span>
-          <span class="w-client">네티브 · 2022.08–09</span>
-          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        </div>
-        <div class="work-detail">
+        <h3 class="work-head">
+          <button type="button" class="work-row" aria-expanded="false" aria-controls="wd-05">
+            <span class="w-idx">05</span>
+            <span class="w-name">네티브 캠페인 발송 기능 구현</span>
+            <span class="w-period">2022.08 — 2022.09</span>
+            <span class="w-client">네티브 · 2022.08–09</span>
+            <span class="w-toggle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+        </h3>
+        <div class="work-detail" id="wd-05">
           <div class="work-detail-inner">
             <div class="work-detail-tag">기여 내용</div>
             <div class="work-detail-text">이메일·앱푸시 캠페인 발송 기능의 프론트엔드 퍼블리싱 전담. 다단계 폼 인터랙션, 실시간 미리보기 패널, 단계별 진행 상태 UI 구현을 담당했습니다.</div>
@@ -314,14 +334,16 @@
 
       <!-- 06 -->
       <div class="work-item rv d4" style="transition-delay:.42s">
-        <div class="work-row" role="button" tabindex="0" aria-expanded="false">
-          <span class="w-idx">06</span>
-          <span class="w-name">암웨이 A Content 마이그레이션</span>
-          <span class="w-period">2022.12 — 2023.01</span>
-          <span class="w-client">암웨이 · 2022.12–2023.01</span>
-          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        </div>
-        <div class="work-detail">
+        <h3 class="work-head">
+          <button type="button" class="work-row" aria-expanded="false" aria-controls="wd-06">
+            <span class="w-idx">06</span>
+            <span class="w-name">암웨이 A Content 마이그레이션</span>
+            <span class="w-period">2022.12 — 2023.01</span>
+            <span class="w-client">암웨이 · 2022.12–2023.01</span>
+            <span class="w-toggle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+        </h3>
+        <div class="work-detail" id="wd-06">
           <div class="work-detail-inner">
             <div class="work-detail-tag">기여 내용</div>
             <div class="work-detail-text">암웨이 콘텐츠 플랫폼 마이그레이션 프로젝트에서 기존 레거시 마크업을 신규 CMS 구조에 맞게 이관·재정비했습니다. 코드 품질 향상 및 불필요한 스타일 정리 작업을 수행했습니다.</div>
@@ -334,14 +356,16 @@
 
       <!-- 07 -->
       <div class="work-item rv d5">
-        <div class="work-row" role="button" tabindex="0" aria-expanded="false">
-          <span class="w-idx">07</span>
-          <span class="w-name">현대해상 다이렉트 보험 서비스</span>
-          <span class="w-period">2023.05</span>
-          <span class="w-client">현대해상 · 2023.05</span>
-          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        </div>
-        <div class="work-detail">
+        <h3 class="work-head">
+          <button type="button" class="work-row" aria-expanded="false" aria-controls="wd-07">
+            <span class="w-idx">07</span>
+            <span class="w-name">현대해상 다이렉트 보험 서비스</span>
+            <span class="w-period">2023.05</span>
+            <span class="w-client">현대해상 · 2023.05</span>
+            <span class="w-toggle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+        </h3>
+        <div class="work-detail" id="wd-07">
           <div class="work-detail-inner">
             <div class="work-detail-tag">기여 내용</div>
             <div class="work-detail-text">현대해상 다이렉트 보험 서비스 플랫폼에서 보험 가입 플로우 전체 UI 퍼블리싱을 담당했습니다. 복잡한 단계별 가입 폼, 약관 동의 체크박스 UI, 모바일 최적화 작업을 수행했습니다.</div>
@@ -354,14 +378,16 @@
 
       <!-- 08 -->
       <div class="work-item rv d5" style="transition-delay:.56s">
-        <div class="work-row" role="button" tabindex="0" aria-expanded="false">
-          <span class="w-idx">08</span>
-          <span class="w-name">라이나생명 운영</span>
-          <span class="w-period">2023.05 — 2023.06</span>
-          <span class="w-client">라이나생명 · 2023.05–06</span>
-          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        </div>
-        <div class="work-detail">
+        <h3 class="work-head">
+          <button type="button" class="work-row" aria-expanded="false" aria-controls="wd-08">
+            <span class="w-idx">08</span>
+            <span class="w-name">라이나생명 운영</span>
+            <span class="w-period">2023.05 — 2023.06</span>
+            <span class="w-client">라이나생명 · 2023.05–06</span>
+            <span class="w-toggle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+        </h3>
+        <div class="work-detail" id="wd-08">
           <div class="work-detail-inner">
             <div class="work-detail-tag">기여 내용</div>
             <div class="work-detail-text">라이나생명 웹사이트 운영 및 유지보수를 담당했습니다. 긴급 이슈 대응, 이벤트 페이지 신규 제작, 콘텐츠 업데이트 및 배너 작업을 수행했습니다.</div>
@@ -374,14 +400,16 @@
 
       <!-- 09 -->
       <div class="work-item rv d6">
-        <div class="work-row" role="button" tabindex="0" aria-expanded="false">
-          <span class="w-idx">09</span>
-          <span class="w-name">KB헬스케어 운영</span>
-          <span class="w-period">2023.07 — 2025.05</span>
-          <span class="w-client">KB헬스케어 · 2023.07–2025.05</span>
-          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        </div>
-        <div class="work-detail">
+        <h3 class="work-head">
+          <button type="button" class="work-row" aria-expanded="false" aria-controls="wd-09">
+            <span class="w-idx">09</span>
+            <span class="w-name">KB헬스케어 운영</span>
+            <span class="w-period">2023.07 — 2025.05</span>
+            <span class="w-client">KB헬스케어 · 2023.07–2025.05</span>
+            <span class="w-toggle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+        </h3>
+        <div class="work-detail" id="wd-09">
           <div class="work-detail-inner">
             <div class="work-detail-tag">기여 내용</div>
             <div class="work-detail-text">KB헬스케어 서비스를 약 2년간 장기 운영하며 신규 기능 개발부터 유지보수까지 전반적인 UI 퍼블리싱을 담당했습니다. 정기 배포 참여, 컴포넌트 개선, QA 대응 및 이슈 트래킹(Jira)을 수행했습니다.</div>
@@ -394,20 +422,22 @@
 
       <!-- ⑦ 10 새마을금고 추가 -->
       <div class="work-item rv d6" style="transition-delay:.72s">
-        <div class="work-row" role="button" tabindex="0" aria-expanded="false">
-          <span class="w-idx">10</span>
-          <span class="w-name">새마을금고 IT단위업무 운영</span>
-          <span class="w-period">2025.08 — 현재</span>
-          <span class="w-client">새마을금고 · 2025.08–현재</span>
-          <div class="w-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        </div>
-        <div class="work-detail">
+        <h3 class="work-head">
+          <button type="button" class="work-row" aria-expanded="false" aria-controls="wd-10">
+            <span class="w-idx">10</span>
+            <span class="w-name">새마을금고 IT단위업무 운영</span>
+            <span class="w-period">2025.08 — 현재</span>
+            <span class="w-client">새마을금고 · 2025.08–현재</span>
+            <span class="w-toggle" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+        </h3>
+        <div class="work-detail" id="wd-10">
           <div class="work-detail-inner">
             <div class="work-detail-tag">기여 내용</div>
             <div class="work-detail-text">대표 홈페이지와 자회사 홈페이지를 한 사람이 함께 맡는 <strong>공통 퍼블리셔</strong>로서, 리뉴얼부터 이후 운영 퍼블리싱까지 전 사이트를 일관된 기준으로 관리하고 있습니다. 투입 초기에는 오래 쌓여 복잡해진 레거시 코드를 직접 분석해 중복되고 얽혀 있던 CSS를 정리했고, 디자이너가 반응형 시안까지 내려주기 어려운 상황에서는 원본 디자인의 의도를 유지하는 선에서 반응형 레이아웃을 직접 설계·구현했습니다. 현재는 <strong>적응형(고정 폭 분기)으로 구축되어 있던 홈페이지들을 반응형으로 전환하는 작업을 진행 중</strong>이며, 기존 마크업을 유지한 채 브레이크포인트와 유동 그리드를 다시 잡아 사이트별로 순차 전환하고 있습니다. 작업은 로컬에서 끝나지 않고 퍼블 서버와 개발 서버(JSP) 전 구간을 직접 수정한 뒤 ITSM 요청을 통해 운영 배포까지 수행합니다. <strong>이 과정에서 웹접근성 심사를 받아 인증 마크를 취득했습니다.</strong> 이 밖에 공통 UI 컴포넌트와 퍼블리싱 가이드 관리, QA 검증, 개발·디자인팀 협업, 일간·주간·월간 보고까지 운영 전반을 맡고 있습니다.</div>
             <div class="a11y-badge">
               <span class="a11y-badge-mark" aria-hidden="true">WA</span>
-              <span class="a11y-badge-text">웹접근성 심사 통과 · 인증 마크 취득</span>
+              <span class="a11y-badge-text"><span class="nb">웹접근성 심사 통과 ·</span> <span class="nb">인증 마크 취득</span></span>
             </div>
             <div class="work-detail-chips">
               <span class="detail-chip">HTML</span><span class="detail-chip">CSS</span><span class="detail-chip">JavaScript</span><span class="detail-chip">JSP</span><span class="detail-chip">Figma</span><span class="detail-chip">웹접근성</span><span class="detail-chip">ITSM</span><span class="detail-chip">반응형</span><span class="detail-chip">적응형→반응형 전환</span>
@@ -428,7 +458,7 @@
 </section>
 
 <!-- PAGE 4 : WORKLIST — 퍼블리싱 워크리스트 & 가이드 -->
-<section class="page" id="p7">
+<section class="page" id="p7" aria-labelledby="p7-title">
   <div class="side-wrap">
 
     <div class="side-head rv d1">
@@ -437,8 +467,8 @@
           <div class="tag-line"></div>
           <span class="tag-txt">04 — Publishing Worklist</span>
         </div>
-        <h2 class="side-title">퍼블리싱 워크리스트<br>&amp; 가이드</h2>
-        <p class="side-lede">작업 화면 현황, 공통 컴포넌트, 마크업 규칙을 한 곳에 모아 관리하는 퍼블리싱 레포지토리입니다.<br>웹접근성 기준과 재사용 가능한 구조를 원칙으로 삼아, <strong>기획부터 디자인, 화면 구현, 문서화까지 혼자 만들었습니다.</strong></p>
+        <h2 class="side-title" id="p7-title">퍼블리싱 워크리스트<br>&amp; 가이드</h2>
+        <p class="side-lede"><span class="nb">작업 화면 현황, 공통 컴포넌트,</span> <span class="nb">마크업 규칙을 한 곳에 모아 관리하는</span> <span class="nb">퍼블리싱 레포지토리입니다.</span><br><span class="nb">웹접근성 기준과 재사용 가능한 구조를</span> <span class="nb">원칙으로 삼아,</span> <strong class="nb">기획부터 디자인, 화면 구현,</strong> <strong class="nb">문서화까지 혼자 만들었습니다.</strong></p>
       </div>
       <div class="side-head-right rv d2">
         <a class="side-hub" href="https://ssssssomi.github.io/publWorklist/" target="_blank" rel="noopener">
@@ -496,7 +526,7 @@
 </section>
 
 <!-- PAGE 5 : PERSONAL — 직접 만든 사이트 -->
-<section class="page" id="p6">
+<section class="page" id="p6" aria-labelledby="p6-title">
   <div class="side-wrap">
 
     <div class="side-head rv d1">
@@ -505,8 +535,8 @@
           <div class="tag-line"></div>
           <span class="tag-txt">05 — Solo Built</span>
         </div>
-        <h2 class="side-title">혼자 끝까지<br>만든 사이트</h2>
-        <p class="side-lede">있으면 좋겠다 싶은 걸 직접 기획해 만든 웹 도구입니다.<br>화면 기획부터 디자인, 마크업, 기능 구현, 배포까지 <strong>전 과정을 혼자 맡았고,</strong><br><strong>사이트에 들어간 이미지도 전부 직접 AI로 만들었습니다.</strong><br>모두 지금 동작합니다.</p>
+        <h2 class="side-title" id="p6-title">혼자 끝까지<br>만든 사이트</h2>
+        <p class="side-lede"><span class="nb">있으면 좋겠다 싶은 걸</span> <span class="nb">직접 기획해 만든 웹 도구입니다.</span><br><span class="nb">화면 기획부터 디자인, 마크업,</span> <span class="nb">기능 구현, 배포까지</span> <strong class="nb">전 과정을 혼자 맡았고,</strong><br><strong class="nb">사이트에 들어간 이미지도</strong> <strong class="nb">전부 직접 AI로 만들었습니다.</strong><br><span class="nb">모두 지금 동작합니다.</span></p>
       </div>
       <div class="side-head-right rv d2">
         <a class="side-hub" href="https://sogeulsogeul.github.io/sogeul-site/" target="_blank" rel="noopener">
@@ -683,7 +713,7 @@
 </section>
 
 <!-- PAGE 5 : AI -->
-<section class="page" id="p5">
+<section class="page" id="p5" aria-labelledby="p5-title">
   <div class="ai-wrap">
 
     <div class="ai-head rv d1">
@@ -692,15 +722,15 @@
           <div class="tag-line"></div>
           <span class="tag-txt">06 — AI Workflow</span>
         </div>
-        <h2 class="ai-title">AI를 활용하는<br>웹퍼블리셔</h2>
-        <p class="ai-desc">단순한 도구 사용을 넘어, AI를 워크플로우에 넣어 더 빠르고 정교하게 구현합니다.<br>이 포트폴리오 사이트도 구조와 디자인은 직접 잡고, 구현 단계에서 Claude AI를 도구로 활용했습니다.</p>
+        <h2 class="ai-title" id="p5-title">AI를 활용하는<br>웹퍼블리셔</h2>
+        <p class="ai-desc"><span class="nb">단순한 도구 사용을 넘어,</span> <span class="nb">AI를 워크플로우에 넣어</span> <span class="nb">더 빠르고 정교하게 구현합니다.</span><br><span class="nb">이 포트폴리오 사이트도</span> <span class="nb">구조와 디자인은 직접 잡고,</span> <span class="nb">구현 단계에서 Claude AI를</span> <span class="nb">도구로 활용했습니다.</span></p>
       </div>
       <div class="ai-head-right rv d2">
         <div class="ai-badge">
           <span class="ai-badge-dot"></span>
           <span class="ai-badge-text">AI-Assisted Portfolio</span>
         </div>
-        <p class="ai-sub">기획 · 디자인 · 이미지 · 코드 구현 전 과정에<br>AI를 워크플로우에 통합했습니다.</p>
+        <p class="ai-sub"><span class="nb">기획 · 디자인 · 이미지 · 코드 구현</span> <span class="nb">전 과정에</span><br><span class="nb">AI를 워크플로우에 통합했습니다.</span></p>
       </div>
     </div>
 
@@ -763,7 +793,7 @@
           <span class="ai-mine-eyebrow">Built by me</span>
           <h3 class="ai-mine-title">내가 만든 스킬</h3>
         </div>
-        <p class="ai-mine-desc">여기까지는 이미 있는 도구를 쓰는 이야기입니다.<br>아래 두 가지는 반복해서 확인하던 기준과 절차를 직접 스킬로 만들어 워크플로우에 넣은 것입니다.</p>
+        <p class="ai-mine-desc"><span class="nb">여기까지는 이미 있는 도구를</span> <span class="nb">쓰는 이야기입니다.</span><br><span class="nb">아래 두 가지는 반복해서 확인하던</span> <span class="nb">기준과 절차를 직접 스킬로 만들어</span> <span class="nb">워크플로우에 넣은 것입니다.</span></p>
       </div>
 
       <div class="ai-cards ai-cards--mine">
@@ -802,7 +832,7 @@
           <span class="ai-mine-eyebrow">Made with Higgsfield</span>
           <h3 class="ai-mine-title">직접 만든 이미지</h3>
         </div>
-        <p class="ai-mine-desc">사이트에 필요한 이미지는 사서 쓰지 않고 직접 만듭니다.<br>Higgsfield로 톤·질감·조명을 지정해 생성한 오브젝트 에셋입니다.</p>
+        <p class="ai-mine-desc"><span class="nb">사이트에 필요한 이미지는</span> <span class="nb">사서 쓰지 않고 직접 만듭니다.</span><br><span class="nb">Higgsfield로 톤·질감·조명을 지정해</span> <span class="nb">생성한 오브젝트 에셋입니다.</span></p>
       </div>
 
       <ul class="asset-strip">
@@ -825,10 +855,10 @@
     </div> -->
 
     <div class="ai-bottom rv d6">
-      <div class="ai-quote">
-        <span class="ai-quote-mark">"</span>
-        <span>"AI는 대체가 아닌 협업 도구, 더 좋은 결과를 위해 적극 활용합니다."</span>
-      </div>
+      <blockquote class="ai-quote">
+        <span class="ai-quote-mark" aria-hidden="true">"</span>
+        <p><span class="nb">AI는 대체가 아닌 협업 도구,</span> <span class="nb">더 좋은 결과를 위해</span> <span class="nb">적극 활용합니다.</span></p>
+      </blockquote>
       <a class="ai-arrow" href="#p4" data-target="p4" aria-label="Contact 섹션으로 이동">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
       </a>
@@ -838,7 +868,7 @@
 </section>
 
 <!-- PAGE 4 (Contact) -->
-<section class="page" id="p4">
+<section class="page" id="p4" aria-labelledby="p4-title">
   <div class="rings">
     <div class="ring"></div><div class="ring"></div>
     <div class="ring"></div><div class="ring"></div>
@@ -846,7 +876,7 @@
   <div class="contact-inner">
     <div class="contact-tag rv d1">Get in touch</div>
     <!-- ⑨ line-height:1.5 인라인으로 적용 -->
-    <h2 class="contact-h rv d2">
+    <h2 class="contact-h rv d2" id="p4-title">
       함께 만들어 갈<br>
       프로젝트가<br>
       있으신가요?
@@ -863,13 +893,15 @@
     </div>
   </div>
   <div class="contact-footer">
-    <span class="cf-copy">© 2026  PORTFOLIO</span>
+    <span class="cf-copy">© 2026 PORTFOLIO</span>
     <div class="cf-badge">
       <span class="cf-badge-role">WEB PUBLISHER</span>
       <span class="cf-badge-name">MIKYEONG SO</span>
     </div>
   </div>
 </section>
+
+</main>
 
 <script src="./assets/js/hero3d.js"></script>
 <script src="./assets/js/main.js"></script>
