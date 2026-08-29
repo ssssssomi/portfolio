@@ -54,12 +54,35 @@ if(FINE_POINTER){
 
 /* ══ 3. NAV SCROLL ══ */
 const mainNav=document.getElementById('mainNav');
+
+/* 먹지 섹션 위의 고정 UI —
+   내비·페이지 인디케이터·커서는 섹션 밖에 떠 있어서 CSS만으로는 지금 어떤 바탕
+   위에 있는지 알 수 없다. body.on-ink를 붙이면 스타일시트의 INK 컨텍스트가 그대로 걸린다.
+   IntersectionObserver로는 못 쓴다 — 최초 관찰 때 여러 섹션이 한 배치로 들어와
+   마지막 항목이 이기므로 어느 섹션이 위인지가 뒤바뀐다.
+   내비가 실제로 겹치는 높이(48px)를 품는 섹션 하나를 직접 찾는 편이 정확하다. */
+const pages=[...document.querySelectorAll('.page')];
+const NAV_PROBE=48;
+function updateInkContext(){
+  const cur=pages.find(p=>{
+    const r=p.getBoundingClientRect();
+    return r.top<=NAV_PROBE && r.bottom>NAV_PROBE;
+  });
+  document.body.classList.toggle('on-ink',!!cur&&cur.classList.contains('page--ink'));
+}
+
+let navTick=false;
 function updateNavBg(){
   const y=window.scrollY||document.documentElement.scrollTop||0;
   mainNav.classList.toggle('scrolled',y>10);
+  if(navTick) return;
+  navTick=true;
+  requestAnimationFrame(()=>{navTick=false;updateInkContext();});
 }
 window.addEventListener('scroll',updateNavBg,{passive:true});
+window.addEventListener('resize',updateInkContext,{passive:true});
 updateNavBg();
+updateInkContext();
 
 /* ══ 4. PAGE DOTS ══ */
 const pgLines=document.querySelectorAll('.pg-line');

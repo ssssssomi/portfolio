@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Synthetic Matter — Chamber</title>
+<meta name="description" content="A faceted metal specimen, generated from a prompt and rendered live in the browser." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" />
+<style>
+  :root {
+    /* 바이올렛 촬영 챔버 팔레트 */
+    --void:    #07060c;   /* 페이지 바닥 */
+    --chamber: #150a2e;   /* 챔버 깊이 */
+    --violet:  #6d28d9;   /* 구조선 */
+    --beam:    #a855f7;   /* 강조 */
+    --orchid:  #c9b6ff;   /* 보조 텍스트 */
+    --bone:    #f0ecfa;   /* 본문 대비 */
+
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --display: "Syne", system-ui, sans-serif;
+
+    --pad: clamp(18px, 3.2vw, 40px);
+    --reticle: 0px; /* 표본의 실제 투영 크기로 JS가 채운다 */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--mono);
+    background: var(--void);
+    color: var(--bone);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  :is(a, button):focus-visible {
+    outline: 1px solid var(--beam);
+    outline-offset: 4px;
+  }
+
+  .hero {
+    position: relative;
+    height: 100svh;
+    min-height: 560px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* ── 레이어 1: 챔버 조명 (캔버스 뒤에서 새어나오는 보라 광원) ── */
+  .hero__chamber {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(60% 46% at 50% 44%, #2e1065 0%, rgba(46,16,101,0) 72%),
+      radial-gradient(38% 30% at 22% 24%, rgba(168,85,247,0.30) 0%, rgba(168,85,247,0) 70%),
+      radial-gradient(46% 34% at 82% 76%, rgba(109,40,217,0.26) 0%, rgba(109,40,217,0) 70%),
+      var(--void);
+  }
+
+  /* ── 레이어 2: WebGL (투명 배경) ── */
+  .hero__canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .hero__canvas canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: pan-y;
+    cursor: grab;
+  }
+  .hero__canvas canvas:active { cursor: grabbing; }
+
+  /* ── 레이어 3: 비네트 + 그레인 ── */
+  .hero__grade {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: radial-gradient(78% 62% at 50% 46%, rgba(7,6,12,0) 42%, rgba(7,6,12,0.88) 100%);
+  }
+  .hero__grade::after {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    opacity: 0.055;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ── 레이어 4: 레티클 (표본을 감싸는 코너 브래킷) ── */
+  .reticle {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    width: var(--reticle);
+    height: var(--reticle);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .reticle i {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border: 1px solid color-mix(in srgb, var(--beam) 80%, transparent);
+    opacity: 0;
+    animation: bracket 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+  }
+  .reticle i:nth-child(1) { top: 0; left: 0; border-right: 0; border-bottom: 0; animation-delay: 0.15s; }
+  .reticle i:nth-child(2) { top: 0; right: 0; border-left: 0; border-bottom: 0; animation-delay: 0.22s; }
+  .reticle i:nth-child(3) { bottom: 0; right: 0; border-left: 0; border-top: 0; animation-delay: 0.29s; }
+  .reticle i:nth-child(4) { bottom: 0; left: 0; border-right: 0; border-top: 0; animation-delay: 0.36s; }
+
+  @keyframes bracket {
+    from { opacity: 0; transform: scale(2.4); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* ── 레이어 5: UI ── */
+  .hero__ui {
+    position: relative;
+    z-index: 4;
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: var(--pad);
+    pointer-events: none;
+  }
+  .hero__ui :is(a, button) { pointer-events: auto; }
+
+  .rise {
+    opacity: 0;
+    animation: rise 0.8s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* 상단 바 */
+  .bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid color-mix(in srgb, var(--violet) 40%, transparent);
+    animation-delay: 0.05s;
+  }
+  .bar__mark {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.34em; /* 7글자 한 단어라 자간을 더 벌려야 마크로 읽힌다 */
+  }
+  .bar__nav {
+    display: flex;
+    gap: 26px;
+    list-style: none;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--orchid);
+  }
+  .bar__nav a:hover { color: var(--beam); }
+
+  /* 하단 계측 블록 */
+  .readout { animation-delay: 0.5s; }
+
+  .readout__telemetry {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 28px;
+    padding-bottom: 12px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--orchid);
+    border-bottom: 1px solid color-mix(in srgb, var(--violet) 40%, transparent);
+  }
+  .readout__telemetry .k {
+    color: color-mix(in srgb, var(--orchid) 55%, transparent);
+    margin-right: 8px;
+  }
+  .readout__telemetry span { font-variant-numeric: tabular-nums; }
+  .readout__hint {
+    margin-left: auto;
+    color: var(--beam);
+  }
+  .readout__hint::before { content: "◇ "; }
+
+  .readout__foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    padding-top: 16px;
+  }
+  .readout__note {
+    max-width: 46ch;
+    font-size: 12px;
+    line-height: 1.85;
+    color: var(--orchid);
+  }
+  .readout__note em {
+    font-style: normal;
+    color: var(--bone);
+  }
+
+  .reset {
+    flex: none;
+    min-height: 44px;
+    padding: 12px 20px;
+    border: 1px solid color-mix(in srgb, var(--violet) 60%, transparent);
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--chamber) 55%, transparent);
+    backdrop-filter: blur(6px);
+    color: var(--orchid);
+    font: inherit;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.25s, border-color 0.25s, background 0.25s;
+  }
+  .reset:hover {
+    color: var(--void);
+    border-color: var(--beam);
+    background: var(--beam);
+  }
+
+  /* 로딩 / 오류 상태 */
+  .status {
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orchid);
+    font-variant-numeric: tabular-nums;
+    pointer-events: none;
+  }
+  .status[hidden] { display: none; }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 720px) {
+    .bar__nav { display: none; }
+    .readout__hint { margin-left: 0; flex-basis: 100%; }
+    .readout__foot { flex-direction: column; align-items: stretch; }
+    .reset { width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reticle i, .rise { animation-duration: 0.01ms; animation-delay: 0s; opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <h1 id="hero-title" class="visually-hidden">Synthetic Matter — a faceted metal specimen generated from a prompt</h1>
+
+    <div class="hero__chamber" aria-hidden="true"></div>
+    <div class="hero__canvas" id="canvas-wrap" aria-hidden="true"></div>
+    <div class="hero__grade" aria-hidden="true"></div>
+
+    <div class="reticle" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <p class="status" id="canvas-status" role="status" hidden></p>
+
+    <div class="hero__ui">
+      <header class="bar rise">
+        <a class="bar__mark" href="../index.html">CHAMBER</a>
+        <nav aria-label="Main">
+          <ul class="bar__nav">
+            <li><a href="../index.html#p3">Work</a></li>
+            <li><a href="../index.html#p2">About</a></li>
+            <li><a href="../index.html#p4">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <div></div>
+
+      <div class="readout rise">
+        <div class="readout__telemetry">
+          <span><span class="k">Specimen</span>01 · Faceted metal</span>
+          <span><span class="k">Azimuth</span><span id="az">000.0°</span></span>
+          <span><span class="k">Elevation</span><span id="el">+00.0°</span></span>
+          <span class="readout__hint">Drag to orbit</span>
+        </div>
+        <div class="readout__foot">
+          <p class="readout__note">
+            One mesh, 30,785 triangles, <em>generated from a prompt</em> and rendered live in
+            your browser. Its surface is bare metal — every colour you see is this room
+            reflected back at you.
+          </p>
+          <button type="button" class="reset" id="reset">Reset view</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+/* ─────────────────────────────────────────────
+   표시할 GLB 경로. 상대경로 / 절대 URL 모두 됩니다.
+   빈 문자열이면 코드로 만든 폴백 오브가 표시됩니다.
+   ※ file:// 로 직접 열면 CORS 때문에 GLB 로드가 막히므로
+     로컬 서버로 확인하세요 (예: python3 -m http.server)
+──────────────────────────────────────────── */
+const GLB_URL = 'hf_20260828_023838_dab908b3-110b-4fd3-a6ac-a53da93e1c2a.glb';
+
+/* 이 모델은 metallic 1.0 / 무채색 베이스컬러라 보이는 색을 환경맵이 결정한다.
+   → 아래 값들이 곧 "보라색 크롬" 룩의 조절 손잡이. */
+const SURFACE_ROUGHNESS = 0.34;  // 낮출수록 반사가 또렷 (0 = 거울)
+const ENV_INTENSITY     = 1.7;   // 챔버 반사 세기
+const EMISSIVE_LEVEL    = 0.45;  // 모델 자체 발광 억제 → 보라 반사가 주도
+
+const wrap = document.getElementById('canvas-wrap');
+const statusEl = document.getElementById('canvas-status');
+const azEl = document.getElementById('az');
+const elEl = document.getElementById('el');
+const resetBtn = document.getElementById('reset');
+
+const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+let reducedMotion = motionQuery.matches;
+motionQuery.addEventListener('change', (e) => { reducedMotion = e.matches; });
+
+function setStatus(text) {
+  statusEl.textContent = text;
+  statusEl.hidden = text === '';
+}
+
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+} catch (err) {
+  setStatus('WebGL is unavailable in this browser.');
+  throw err;
+}
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(wrap.clientWidth, wrap.clientHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.15;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+wrap.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+
+/* ── 환경맵: 보라 촬영 챔버 ──────────────────────────────
+   금속 표면이 그대로 비추는 방이라 패널 배치가 곧 룩이다.
+   흰 천장 키 + 좌측 바이올렛 + 우측 마젠타 림 + 밝은 스트립 하나. */
+function makeEnvironment() {
+  const env = new THREE.Scene();
+  env.background = new THREE.Color(0x0a0714);
+
+  const panels = [
+    { color: 0xffffff, size: [7, 7],  pos: [0, 9, 1],    rot: [Math.PI / 2, 0, 0] },      // 천장 키
+    { color: 0x7c3aed, size: [12, 12], pos: [-9, 1, -2], rot: [0, Math.PI / 2, 0] },      // 좌측 바이올렛
+    { color: 0xc026d3, size: [10, 10], pos: [9, -1, 1],  rot: [0, -Math.PI / 2, 0] },     // 우측 마젠타 림
+    { color: 0x1e1b4b, size: [16, 16], pos: [0, -8, 0],  rot: [-Math.PI / 2, 0, 0] },     // 어두운 바닥
+    { color: 0xe9d5ff, size: [0.7, 11], pos: [-2.5, 3, 7], rot: [0, 0, 0.35] },           // 스페큘러 스트립
+    { color: 0x4c1d95, size: [14, 14], pos: [0, 0, -10], rot: [0, 0, 0] },                // 후면 채움
+  ];
+
+  panels.forEach(({ color, size, pos, rot }) => {
+    const m = new THREE.Mesh(
+      new THREE.PlaneGeometry(size[0], size[1]),
+      new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide })
+    );
+    m.position.set(...pos);
+    m.rotation.set(...rot);
+    env.add(m);
+  });
+
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const map = pmrem.fromScene(env, 0.03).texture; // 크롬이라 블러를 거의 안 준다
+  pmrem.dispose();
+  return map;
+}
+scene.environment = makeEnvironment();
+
+const camera = new THREE.PerspectiveCamera(35, wrap.clientWidth / wrap.clientHeight, 0.1, 100);
+camera.position.set(0, 0, 7);
+
+/* ── 1. 아웃라인 워드마크 (표본 뒤에 놓여 일부가 가려진다) ── */
+const WORDMARK = ['SYNTHETIC', 'MATTER'];
+const textCanvas = document.createElement('canvas');
+textCanvas.width = 2048; textCanvas.height = 1024;
+const textTexture = new THREE.CanvasTexture(textCanvas);
+textTexture.colorSpace = THREE.SRGBColorSpace;
+textTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+
+function drawWordmark() {
+  const ctx = textCanvas.getContext('2d');
+  const W = textCanvas.width, H = textCanvas.height;
+  const maxW = W - 200;
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.lineJoin = 'round';
+
+  WORDMARK.forEach((line, i) => {
+    // 긴 줄이 캔버스를 넘지 않도록 줄마다 크기를 맞춘다
+    let px = 300;
+    ctx.font = `800 ${px}px Syne, sans-serif`;
+    const w = ctx.measureText(line).width;
+    if (w > maxW) {
+      px = Math.floor(px * (maxW / w));
+      ctx.font = `800 ${px}px Syne, sans-serif`;
+    }
+    const y = H / 2 + (i - (WORDMARK.length - 1) / 2) * 340;
+    ctx.strokeStyle = 'rgba(167,139,250,0.85)';
+    ctx.lineWidth = 5;
+    ctx.strokeText(line, W / 2, y);
+  });
+
+  textTexture.needsUpdate = true;
+}
+drawWordmark();
+document.fonts.load('800 300px Syne').then(drawWordmark).catch(() => {});
+document.fonts.ready.then(drawWordmark);
+
+const TEXT_PLANE_W = 9, TEXT_PLANE_H = 4.5;
+const textPlane = new THREE.Mesh(
+  new THREE.PlaneGeometry(TEXT_PLANE_W, TEXT_PLANE_H),
+  // toneMapped:false → 캔버스에 칠한 보라가 톤매핑에 눌리지 않고 그대로 나온다
+  new THREE.MeshBasicMaterial({ map: textTexture, transparent: true, toneMapped: false })
+);
+textPlane.position.z = -1.6;
+scene.add(textPlane);
+
+/* 세로 화면에서 워드마크가 잘리지 않도록 뷰포트에 맞춰 축소 */
+function layoutTextPlane() {
+  const dist = camera.position.z - textPlane.position.z;
+  const viewH = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * dist;
+  const viewW = viewH * camera.aspect;
+  textPlane.scale.setScalar(Math.min(1, (viewW * 0.94) / TEXT_PLANE_W));
+}
+
+/* ── 2. 먼지 입자 ── */
+const starGeo = new THREE.BufferGeometry();
+const starCount = 260;
+const pos = new Float32Array(starCount * 3);
+for (let i = 0; i < starCount * 3; i += 3) {
+  pos[i]     = (Math.random() - 0.5) * 22;
+  pos[i + 1] = (Math.random() - 0.5) * 12;
+  pos[i + 2] = -3 - Math.random() * 7;
+}
+starGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({
+  color: 0xa855f7, size: 0.022, sizeAttenuation: true,
+  transparent: true, opacity: 0.55, toneMapped: false
+}));
+scene.add(stars);
+
+/* ── 3. 표본 (GLB 또는 폴백) ── */
+const objectGroup = new THREE.Group();
+scene.add(objectGroup);
+
+let objectAdded = false; // 로더 실패 경로가 겹쳐 폴백이 두 번 붙는 것 방지
+
+/* 표본이 화면에서 차지할 월드 크기(가장 긴 축). 레티클이 이 값을 따라간다. */
+const SPECIMEN_SPAN = 2.2;
+
+function addFallbackOrb() {
+  if (objectAdded) return;
+  objectAdded = true;
+  objectGroup.add(new THREE.Mesh(
+    new THREE.IcosahedronGeometry(SPECIMEN_SPAN / 2, 3), // 각진 결이 GLB와 맞도록 저해상도 + flatShading
+    new THREE.MeshPhysicalMaterial({
+      color: 0xffffff, metalness: 1, roughness: SURFACE_ROUGHNESS,
+      envMapIntensity: ENV_INTENSITY, flatShading: true,
+      iridescence: 0.5, iridescenceIOR: 1.35,
+    })
+  ));
+  setStatus('');
+  resize();
+}
+
+function fitAndAdd(object) {
+  if (objectAdded) return;
+  objectAdded = true;
+
+  const box = new THREE.Box3().setFromObject(object);
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  const scale = SPECIMEN_SPAN / Math.max(size.x, size.y, size.z);
+
+  // position은 scale의 영향을 받지 않으므로, 오프셋도 같이 스케일해야 실제로 중앙에 온다
+  object.scale.setScalar(scale);
+  object.position.copy(center).multiplyScalar(-scale);
+
+  object.traverse((n) => {
+    if (!n.isMesh) return;
+    const m = n.material;
+    m.envMapIntensity = ENV_INTENSITY;
+    if ('roughness' in m) m.roughness = SURFACE_ROUGHNESS;
+    if (m.emissive) m.emissiveIntensity = EMISSIVE_LEVEL;
+  });
+
+  objectGroup.add(object);
+  setStatus('');
+  resize();
+}
+
+if (GLB_URL) {
+  setStatus('Loading specimen');
+  import('three/addons/loaders/GLTFLoader.js')
+    .then(({ GLTFLoader }) => {
+      new GLTFLoader().load(
+        GLB_URL,
+        (g) => fitAndAdd(g.scene),
+        (e) => {
+          if (e.lengthComputable) {
+            setStatus(`Loading specimen ${Math.round((e.loaded / e.total) * 100)}%`);
+          }
+        },
+        () => { setStatus(''); addFallbackOrb(); }
+      );
+    })
+    .catch(() => { setStatus(''); addFallbackOrb(); });
+} else {
+  addFallbackOrb();
+}
+
+/* 환경맵이 대부분을 그리므로 직접광은 실루엣을 세우는 정도만 */
+const rim = new THREE.DirectionalLight(0xd8b4fe, 1.1);
+rim.position.set(-4, 2, -3);
+const key = new THREE.DirectionalLight(0xffffff, 0.9);
+key.position.set(3, 4, 5);
+scene.add(rim, key, new THREE.AmbientLight(0x4c1d95, 0.3));
+
+/* ── 4. 드래그 오빗 + 자동 회전 (카메라 고정 → 워드마크는 정면 유지) ── */
+let targetRX = 0, targetRY = 0;
+let dragging = false, lastX = 0, lastY = 0;
+
+const canvas = renderer.domElement;
+let pointerId = null;
+
+canvas.addEventListener('pointerdown', (e) => {
+  dragging = true; pointerId = e.pointerId;
+  lastX = e.clientX; lastY = e.clientY;
+  canvas.setPointerCapture(e.pointerId); // 커서가 캔버스를 벗어나도 드래그 유지
+});
+canvas.addEventListener('pointermove', (e) => {
+  if (!dragging || e.pointerId !== pointerId) return;
+  targetRY += (e.clientX - lastX) * 0.006;
+  targetRX += (e.clientY - lastY) * 0.006;
+  targetRX = Math.max(-1, Math.min(1, targetRX));
+  lastX = e.clientX; lastY = e.clientY;
+});
+function endDrag(e) {
+  if (e.pointerId !== pointerId) return;
+  dragging = false; pointerId = null;
+}
+canvas.addEventListener('pointerup', endDrag);
+canvas.addEventListener('pointercancel', endDrag); // 터치 취소 시 회전이 안 멈추던 문제
+
+resetBtn.addEventListener('click', () => { targetRX = 0; targetRY = 0; });
+
+/* 포인터를 따라가는 미세한 카메라 시차 — 오브가 공간 안에 있다는 느낌 */
+let parallaxX = 0, parallaxY = 0;
+window.addEventListener('pointermove', (e) => {
+  parallaxX = (e.clientX / window.innerWidth - 0.5) * 0.5;
+  parallaxY = (e.clientY / window.innerHeight - 0.5) * 0.3;
+});
+
+function resize() {
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  if (!w || !h) return;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(w, h);
+  layoutTextPlane();
+
+  // 레티클을 추측값이 아니라 표본의 실제 투영 크기에 맞춘다
+  const viewH = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
+  const px = Math.min((SPECIMEN_SPAN / viewH) * h * 1.3, w * 0.9, h * 0.72);
+  document.documentElement.style.setProperty('--reticle', `${Math.round(px)}px`);
+}
+// 모바일 주소창 접힘 등 window resize가 안 오는 변화까지 잡는다
+new ResizeObserver(resize).observe(wrap);
+resize();
+
+/* ── 5. 계측 표시 (실제 회전값을 읽어서 갱신) ── */
+let lastAz = null, lastEl = null;
+function updateTelemetry() {
+  const az = ((THREE.MathUtils.radToDeg(objectGroup.rotation.y) % 360) + 360) % 360;
+  const el = THREE.MathUtils.radToDeg(objectGroup.rotation.x);
+  const azText = `${az.toFixed(1).padStart(5, '0')}°`;
+  const elText = `${el < 0 ? '-' : '+'}${Math.abs(el).toFixed(1).padStart(4, '0')}°`;
+  if (azText !== lastAz) { azEl.textContent = azText; lastAz = azText; }
+  if (elText !== lastEl) { elEl.textContent = elText; lastEl = elText; }
+}
+
+const clock = new THREE.Clock();
+let frame = 0;
+
+renderer.setAnimationLoop(() => {
+  const t = clock.getElapsedTime();
+
+  if (!reducedMotion && !dragging) targetRY += 0.0025;
+  objectGroup.rotation.y += (targetRY - objectGroup.rotation.y) * 0.08;
+  objectGroup.rotation.x += (targetRX - objectGroup.rotation.x) * 0.08;
+
+  if (!reducedMotion) {
+    objectGroup.position.y = Math.sin(t * 0.7) * 0.1;
+    stars.rotation.z = t * 0.008;
+    camera.position.x += (parallaxX - camera.position.x) * 0.05;
+    camera.position.y += (-parallaxY - camera.position.y) * 0.05;
+    camera.lookAt(0, 0, 0);
+  }
+
+  if (++frame % 3 === 0) updateTelemetry();
+  renderer.render(scene, camera);
+});
+</script>
+</body>
+</html>

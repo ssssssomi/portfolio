@@ -110,7 +110,8 @@
       const rd = (p.big ? 1.9 : 1.15) * d;
 
       ctx.globalAlpha = a;
-      ctx.fillStyle = '#fff';
+      // 흰 패널 위 — 옅은 회색 점이라야 타이포를 방해하지 않는다
+      ctx.fillStyle = '#B9BBBE';
       ctx.beginPath();
       ctx.arc(px, py, rd, 0, Math.PI * 2);
       ctx.fill();
@@ -125,7 +126,7 @@
 
     /* 연결선: 자기 셀 + 이웃 8칸만 검사 */
     ctx.lineWidth = 0.6;
-    ctx.strokeStyle = '#fff';
+    ctx.strokeStyle = '#D3D5D8';
     const lim2 = LINK_PX * LINK_PX;
     for(let i = 0; i < drawn.length; i++){
       const A = drawn[i];

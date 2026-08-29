@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>소미경 — Web Publisher Portfolio</title>
 <meta name="description" content="웹퍼블리셔 소미경 포트폴리오. 금융·헬스케어 분야 10개 프로젝트, 웹접근성 인증 취득, 퍼블리싱 가이드와 직접 만든 웹 도구를 정리했습니다.">
-<meta name="theme-color" content="#060606">
+<meta name="theme-color" content="#14120F">
 <meta property="og:type" content="website">
 <meta property="og:title" content="소미경 — Web Publisher Portfolio">
 <meta property="og:description" content="웹퍼블리셔 소미경 포트폴리오. 금융·헬스케어 분야 10개 프로젝트, 웹접근성 인증 취득, 퍼블리싱 가이드와 직접 만든 웹 도구를 정리했습니다.">
@@ -13,7 +13,7 @@
 <meta property="og:url" content="https://ssssssomi.github.io/portfolio/">
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://ssssssomi.github.io/portfolio/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23060606'/%3E%3Ctext x='16' y='23' font-family='Helvetica,Arial' font-size='20' font-weight='bold' fill='%23e8e4dc' text-anchor='middle'%3Ep%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2314120F'/%3E%3Ctext x='16' y='23' font-family='Helvetica,Arial' font-size='20' font-weight='bold' fill='%23F4F0E6' text-anchor='middle'%3Ep%3C/text%3E%3C/svg%3E">
 <!-- 폰트는 외부 도메인 3곳에서 온다. preconnect로 DNS·TLS를 미리 열어 첫 텍스트 표시를 앞당긴다 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,16 +34,17 @@
 
 
 <nav id="mainNav" aria-label="주요 메뉴">
-  <div class="nav-contact">Seoul, Korea / 2026</div>
-  <ul class="nav-center">
-    <li><a href="#p1" data-target="p1">Home</a></li>
-    <li><a href="#p2" data-target="p2">About</a></li>
-    <li><a href="#p3" data-target="p3">Project</a></li>
-    <li><a href="#p7" data-target="p7">Worklist</a></li>
-    <li><a href="#p6" data-target="p6">Personal</a></li>
-    <li><a href="#p5" data-target="p5">AI</a></li>
-    <li><a href="#p4" data-target="p4">Contact</a></li>
-  </ul>
+  <a class="nav-mark" href="#p1" data-target="p1">SOMI<sup>&copy;</sup></a>
+  <div class="nav-right">
+    <ul class="nav-center">
+      <li><a href="#p2" data-target="p2">About</a></li>
+      <li><a href="#p3" data-target="p3">Project</a></li>
+      <li><a href="#p7" data-target="p7">Worklist</a></li>
+      <li><a href="#p6" data-target="p6">Personal</a></li>
+      <li><a href="#p5" data-target="p5">AI</a></li>
+    </ul>
+    <a class="pill" href="#p4" data-target="p4">Let's talk</a>
+  </div>
 </nav>
 
 <nav class="pg-ind" id="pgInd" aria-label="섹션 바로가기">
@@ -61,6 +62,7 @@
 <!-- PAGE 1 -->
 <section class="page" id="p1" aria-labelledby="heroTitle">
 
+  <div class="hero-stage">
   <canvas id="hero3d" aria-hidden="true"></canvas>
 
   <div class="hero-wrap">
@@ -89,11 +91,11 @@
     <!-- 좌하단: 스탯 -->
     <div class="hero-stats">
       <div class="hero-stat">
-        <span class="hero-stat-num">10+</span>
+        <span class="hero-stat-num">10<span class="u">+</span></span>
         <span class="hero-stat-label">Projects</span>
       </div>
       <div class="hero-stat">
-        <span class="hero-stat-num">5yr+</span>
+        <span class="hero-stat-num">5<span class="u">yr+</span></span>
         <span class="hero-stat-label">Experience</span>
       </div>
       <div class="hero-stat">
@@ -113,9 +115,13 @@
     </div>
 
     <div class="hero-scroll" aria-hidden="true">
-      <span>Scroll</span>
-      <span class="hero-scroll-line"></span>
+      <svg class="hero-scroll-ring" viewBox="0 0 100 100">
+        <defs><path id="scrollArc" d="M50,50 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0"></path></defs>
+        <text><textPath href="#scrollArc">Scroll down · Scroll down · </textPath></text>
+      </svg>
+      <span class="hero-scroll-arrow">&#8595;</span>
     </div>
+  </div>
   </div>
 
 </section>
@@ -535,20 +541,33 @@
           <div class="tag-line"></div>
           <span class="tag-txt">05 — Solo Built</span>
         </div>
-        <h2 class="side-title" id="p6-title">혼자 끝까지<br>만든 사이트</h2>
-        <p class="side-lede"><span class="nb">있으면 좋겠다 싶은 걸</span> <span class="nb">직접 기획해 만든 웹 도구입니다.</span><br><span class="nb">화면 기획부터 디자인, 마크업,</span> <span class="nb">기능 구현, 배포까지</span> <strong class="nb">전 과정을 혼자 맡았고,</strong><br><strong class="nb">사이트에 들어간 이미지도</strong> <strong class="nb">전부 직접 AI로 만들었습니다.</strong><br><span class="nb">모두 지금 동작합니다.</span></p>
+        <h2 class="side-title" id="p6-title">My WebSites</h2>
+        <p class="side-lede"><span class="nb">있으면 좋겠다 싶은 걸</span> <span class="nb">미루지 않고 만들다 보니</span> <span class="nb">아홉 개가 쌓였습니다.</span><br><span class="nb">기획 · 디자인 · 마크업 ·</span> <span class="nb">기능 구현 · 배포까지</span> <strong class="nb">전 과정을 혼자 했고,</strong><br><span class="nb">화면에 들어간 이미지와</span> <span class="nb">3D 오브젝트도</span> <strong class="nb">스톡 한 장 없이 전부 직접 만들었습니다.</strong><br><span class="nb">아래 카드는 전부</span> <span class="nb">지금 열어서 눌러볼 수 있는</span> <span class="nb">실제 사이트입니다.</span></p>
       </div>
       <div class="side-head-right rv d2">
-        <a class="side-hub" href="https://sogeulsogeul.github.io/sogeul-site/" target="_blank" rel="noopener">
-          <span class="side-hub-label">모아보기</span>
-          <span class="side-hub-url">sogeulsogeul.github.io/sogeul-site</span>
-          <span class="visually-hidden">새 창 열림</span>
-        </a>
-        <p class="side-count">12 Live Sites</p>
+        <p class="side-count">9 Live Sites</p>
+        <ul class="side-facts">
+          <li>전 과정 단독 제작</li>
+          <li>이미지 · 3D 에셋 직접 제작</li>
+          <li>전부 지금 동작</li>
+        </ul>
       </div>
     </div>
 
     <div class="side-grid rv d3">
+
+      <a class="side-card" href="3dWeb/index.html" target="_blank" rel="noopener">
+        <div class="side-card-top">
+          <span class="side-kind">3D · WebGL</span>
+          <span class="side-arrow" aria-hidden="true">↗</span>
+        </div>
+        <h3 class="side-name">Synthetic Matter</h3>
+        <p class="side-role">기획 · 디자인 · 3D 에셋 · 퍼블리싱<span class="visually-hidden"> — 전 과정 단독 진행</span></p>
+        <p class="side-desc">직접 만든 3D 오브젝트를 three.js로 브라우저에서 실시간 렌더링합니다. 삼각형 30,785개짜리 금속 표면에는 색이 없고, 보이는 색은 전부 이 방이 반사된 것입니다. 드래그로 궤도를 돌리면 방위·고도 값이 실시간으로 바뀝니다.</p>
+        <div class="side-chips"><span>직접 만든 3D 에셋</span><span>three.js 실시간 렌더</span><span>드래그 궤도 조작</span></div>
+        <span class="side-url">ssssssomi.github.io/portfolio/3dWeb</span>
+        <span class="visually-hidden">새 창 열림</span>
+      </a>
 
       <a class="side-card" href="moment-haan/moment-haan.html" target="_blank" rel="noopener">
         <div class="side-card-top">
@@ -639,58 +658,6 @@
         <p class="side-desc">기준 색 하나로 어울리는 배색을 찾아주는 컬러 팔레트 도구입니다. WCAG 명암비를 함께 확인하고 CSS 변수로 내보낼 수 있습니다.</p>
         <div class="side-chips"><span>배색 추천</span><span>명암비 검사</span><span>CSS 변수</span></div>
         <span class="side-url">sogeulsogeul.github.io/tonfit</span>
-        <span class="visually-hidden">새 창 열림</span>
-      </a>
-
-      <a class="side-card" href="https://sogeulsogeul.github.io/sogeul-site/pdf/" target="_blank" rel="noopener">
-        <div class="side-card-top">
-          <span class="side-kind">PWA</span>
-          <span class="side-arrow" aria-hidden="true">↗</span>
-        </div>
-        <h3 class="side-name">로컬 PDF 변환기</h3>
-        <p class="side-role">기획 · 디자인 · 퍼블리싱<span class="visually-hidden"> — 전 과정 단독 진행</span></p>
-        <p class="side-desc">PDF를 이미지·Excel·텍스트로 바꾸고 페이지를 나눕니다. 파일이 서버로 올라가지 않고 브라우저 안에서만 처리되며, 설치하면 오프라인에서도 씁니다.</p>
-        <div class="side-chips"><span>업로드 없음</span><span>오프라인</span><span>4가지 변환</span></div>
-        <span class="side-url">sogeulsogeul.github.io/sogeul-site/pdf</span>
-        <span class="visually-hidden">새 창 열림</span>
-      </a>
-
-      <a class="side-card" href="https://sogeulsogeul.github.io/sogeul-site/html/tadak-typing.html" target="_blank" rel="noopener">
-        <div class="side-card-top">
-          <span class="side-kind">Web Tool</span>
-          <span class="side-arrow" aria-hidden="true">↗</span>
-        </div>
-        <h3 class="side-name">타닥</h3>
-        <p class="side-role">기획 · 디자인 · 퍼블리싱<span class="visually-hidden"> — 전 과정 단독 진행</span></p>
-        <p class="side-desc">글을 골라 따라 치면 분당 타수와 정확도를 재는 타자 속도 측정 도구입니다. 결과는 공유용 리포트 카드로 저장됩니다.</p>
-        <div class="side-chips"><span>3단계 지문</span><span>실시간 정확도</span><span>공유 카드</span></div>
-        <span class="side-url">sogeulsogeul.github.io/sogeul-site/html/tadak-typing.html</span>
-        <span class="visually-hidden">새 창 열림</span>
-      </a>
-
-      <a class="side-card" href="https://sogeulsogeul.github.io/sogeul-site/html/office.html" target="_blank" rel="noopener">
-        <div class="side-card-top">
-          <span class="side-kind">Web App</span>
-          <span class="side-arrow" aria-hidden="true">↗</span>
-        </div>
-        <h3 class="side-name">오피스타임</h3>
-        <p class="side-role">기획 · 디자인 · 퍼블리싱<span class="visually-hidden"> — 전 과정 단독 진행</span></p>
-        <p class="side-desc">같은 팀 동료끼리 쓰는 가벼운 게임·챌린지 앱입니다. 점심 내기는 사다리로, 메뉴는 룰렛으로 정하고 결과를 보드에 남깁니다.</p>
-        <div class="side-chips"><span>사다리·룰렛</span><span>데일리 챌린지</span><span>팀 랭킹</span></div>
-        <span class="side-url">sogeulsogeul.github.io/sogeul-site/html/office.html</span>
-        <span class="visually-hidden">새 창 열림</span>
-      </a>
-
-      <a class="side-card" href="https://sogeulsogeul.github.io/sogeul-site/html/matjip.html" target="_blank" rel="noopener">
-        <div class="side-card-top">
-          <span class="side-kind">Web Tool</span>
-          <span class="side-arrow" aria-hidden="true">↗</span>
-        </div>
-        <h3 class="side-name">맛집 순위</h3>
-        <p class="side-role">기획 · 디자인 · 퍼블리싱<span class="visually-hidden"> — 전 과정 단독 진행</span></p>
-        <p class="side-desc">구글 지도 평점을 기준으로 지역별 맛집 순위를 보여줍니다. 등록해 둔 가게의 평점을 매일 한 번 자동으로 다시 받아와 갱신합니다.</p>
-        <div class="side-chips"><span>구글 평점순</span><span>지역 필터</span><span>매일 자동 갱신</span></div>
-        <span class="side-url">sogeulsogeul.github.io/sogeul-site/html/matjip.html</span>
         <span class="visually-hidden">새 창 열림</span>
       </a>
 
@@ -868,7 +835,7 @@
 </section>
 
 <!-- PAGE 4 (Contact) -->
-<section class="page" id="p4" aria-labelledby="p4-title">
+<section class="page page--ink" id="p4" aria-labelledby="p4-title">
   <div class="rings">
     <div class="ring"></div><div class="ring"></div>
     <div class="ring"></div><div class="ring"></div>
@@ -891,6 +858,7 @@
         <a class="cinfo-val" href="mailto:sssomikyeong@gmail.com">sssomikyeong@gmail.com</a>
       </div>
     </div>
+    <a class="pill pill--lg rv d4" href="mailto:sssomikyeong@gmail.com">이력서 · 포트폴리오 문의</a>
   </div>
   <div class="contact-footer">
     <span class="cf-copy">© 2026 PORTFOLIO</span>
