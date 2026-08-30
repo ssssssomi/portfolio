@@ -7,10 +7,12 @@
   --bg-rgb:239,239,237;
   --bg:rgb(var(--bg-rgb));
   --fg:#0B0B0B;
-  /* 회색 단계는 크기별 최소 대비에 맞춰 셋으로 나눈다.
-     본문 7.3:1 · 라벨 5.3:1 · 대형 디스플레이 전용 3.2:1(24px 이상에서만 쓴다). */
+  /* 회색 단계는 크기별 최소 대비에 맞춰 셋으로 나눈다. 대비는 '흰 패널 / 회색 지면'
+     두 값을 같이 적는다 — 지면 위에 직접 놓이는 내비·마퀴·인디케이터가 더 빡빡하다.
+     본문 6.8:1/5.9:1 · 라벨 5.3:1/4.6:1 · --fg-mute는 3.2:1/2.8:1이라
+     흰 패널 위 24px 이상 대형 텍스트에만 쓴다(지면 위에서는 3:1도 못 넘긴다). */
   --fg2:#5A5B5E;
-  --fg3:#6E6F73;
+  --fg3:#6A6B6F;
   --fg-mute:#8E8F93;
   --fg-faint:rgba(11,11,11,.12);
   --line:rgba(11,11,11,.1);
@@ -496,7 +498,8 @@ body:not(.has-cursor) #cur-ring{display:none}
   font-size:clamp(24px,2.9vw,36px);
   font-weight:500;line-height:1.45;
   letter-spacing:-.03em;
-  color:var(--fg-mute);
+  /* 회색 지면 위 5.9:1. --fg-mute는 2.8:1이라 대형 텍스트 기준도 못 넘긴다 */
+  color:var(--fg2);
   margin-bottom:40px;
   max-width:100%;
   word-break:keep-all;
@@ -1145,7 +1148,7 @@ a.cinfo-val:hover{border-color:var(--fg)}
     min-height:100vh;min-height:100dvh;
   }
   .about-intro{grid-column:1;padding-top:0;justify-content:flex-start}
-  .about-quote{font-size:22px;line-height:1.5;margin-bottom:26px;word-break:keep-all;color:var(--fg2)}
+  .about-quote{font-size:22px;line-height:1.5;margin-bottom:26px;word-break:keep-all}
   .info-grid{grid-template-columns:1fr 1fr;gap:16px 20px}
   .about-right{
     grid-column:1;
@@ -1175,7 +1178,7 @@ a.cinfo-val:hover{border-color:var(--fg)}
 
 }
 @media(max-width:480px){
-  .about-quote{font-size:20px;color:var(--fg2)}
+  .about-quote{font-size:20px}
   .info-grid{grid-template-columns:1fr}
   .contact-h{font-size:26px}
 }
