@@ -106,12 +106,16 @@
 
       // 깊이 안개: 뒤쪽 입자는 흐려지고 작아진다
       const t  = Math.max(0, Math.min(1, (d - 0.45) / 0.85));
-      const a  = (p.big ? 0.34 : 0.20) + t * (p.big ? 0.62 : 0.52);
-      const rd = (p.big ? 1.9 : 1.15) * d;
+      // 먹지에서는 같은 알파도 훨씬 밝게 읽힌다. 흰 패널 시절보다 전반을 낮춘다
+      const a  = (p.big ? 0.26 : 0.11) + t * (p.big ? 0.58 : 0.33);
+      // 원근 계수 d가 커지면 앞쪽 입자가 통째로 큰 원반이 된다.
+      // 먹지에서는 그 하나가 앰버 얼룩처럼 튀므로 반지름에 상한을 둔다.
+      const rd = Math.min((p.big ? 1.9 : 1.15) * d, p.big ? 3.2 : 2.0);
 
       ctx.globalAlpha = a;
-      // 흰 패널 위 — 옅은 회색 점이라야 타이포를 방해하지 않는다
-      ctx.fillStyle = '#B9BBBE';
+      // 먹지 위 — 대부분은 흐린 재색 먼지, 10%인 강조 입자만 앰버로 켠다.
+      // 색이 하나뿐인 화면이라 이 앰버 점들이 곧 별처럼 읽힌다.
+      ctx.fillStyle = p.big ? '#E8B04B' : '#8E8B84';
       ctx.beginPath();
       ctx.arc(px, py, rd, 0, Math.PI * 2);
       ctx.fill();
@@ -126,7 +130,7 @@
 
     /* 연결선: 자기 셀 + 이웃 8칸만 검사 */
     ctx.lineWidth = 0.6;
-    ctx.strokeStyle = '#D3D5D8';
+    ctx.strokeStyle = '#6E6B65';
     const lim2 = LINK_PX * LINK_PX;
     for(let i = 0; i < drawn.length; i++){
       const A = drawn[i];
@@ -146,7 +150,7 @@
             if(d2 > lim2) continue;
             // 가까울수록, 그리고 양쪽 다 앞에 있을수록 진하게
             const near = 1 - Math.sqrt(d2) / LINK_PX;
-            ctx.globalAlpha = near * Math.min(A.a, B.a) * 0.42;
+            ctx.globalAlpha = near * Math.min(A.a, B.a) * 0.30;
             ctx.beginPath();
             ctx.moveTo(A.px, A.py);
             ctx.lineTo(B.px, B.py);

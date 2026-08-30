@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>소미경 — Web Publisher Portfolio</title>
 <meta name="description" content="웹퍼블리셔 소미경 포트폴리오. 금융·헬스케어 분야 10개 프로젝트, 웹접근성 인증 취득, 퍼블리싱 가이드와 직접 만든 웹 도구를 정리했습니다.">
-<!-- 첫 화면은 밝은 회색 지면이다. 주소창을 --bg와 같은 값으로 맞춰 경계를 없앤다 -->
-<meta name="theme-color" content="#EFEFED">
+<!-- 첫 화면은 먹지다. 주소창을 --ink와 같은 값으로 맞춰 경계를 없앤다 -->
+<meta name="theme-color" content="#08080A">
 <meta property="og:type" content="website">
 <meta property="og:title" content="소미경 — Web Publisher Portfolio">
 <meta property="og:description" content="웹퍼블리셔 소미경 포트폴리오. 금융·헬스케어 분야 10개 프로젝트, 웹접근성 인증 취득, 퍼블리싱 가이드와 직접 만든 웹 도구를 정리했습니다.">
@@ -14,12 +14,13 @@
 <meta property="og:url" content="https://ssssssomi.github.io/portfolio/">
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://ssssssomi.github.io/portfolio/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230B0B0B'/%3E%3Ctext x='16' y='23' font-family='Helvetica,Arial' font-size='20' font-weight='bold' fill='%23EFEFED' text-anchor='middle'%3Ep%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2308080A'/%3E%3Ctext x='16' y='23' font-family='Helvetica,Arial' font-size='21' font-weight='bold' fill='%23E8B04B' text-anchor='middle'%3Ep%3C/text%3E%3C/svg%3E">
 <!-- 폰트는 외부 도메인 3곳에서 온다. preconnect로 DNS·TLS를 미리 열어 첫 텍스트 표시를 앞당긴다 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Syne+Mono&display=swap" rel="stylesheet">
+<!-- 디스플레이는 Bricolage Grotesque(가변 opsz·wght), 유틸은 IBM Plex Mono, 본문은 Pretendard -->
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!-- 버전을 고정한다. 태그 없이 받으면 배포 시점의 최신본이 내려와 본문 폰트가 예고 없이 바뀔 수 있다 -->
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
 <link rel="stylesheet" href="./assets/css/style.css">
@@ -67,16 +68,15 @@
   <canvas id="hero3d" aria-hidden="true"></canvas>
 
   <div class="hero-wrap">
-    <!-- 좌상단: portfolio + 태그 -->
+    <!-- 좌상단: 태그 + portfolio + 앰버 실선 -->
     <div class="hero-top">
-      <h1 class="hero-h1" id="heroTitle">portfolio</h1>
-      <div class="hero-sub-row">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-dot" aria-hidden="true"></span>
         <span class="hero-tag" id="typingTag"></span>
       </div>
+      <h1 class="hero-h1" id="heroTitle">portfolio</h1>
+      <div class="hero-rule" aria-hidden="true"></div>
     </div>
-
-
-
 
 
     <!-- 중앙 우측: 네비 -->
@@ -89,7 +89,7 @@
       <a href="#p4" data-target="p4">Contact</a>
     </nav>
 
-    <!-- 좌하단: 스탯 -->
+    <!-- 좌하단: 사실 네 줄. 인증 수치만 앰버로 둔다 -->
     <div class="hero-stats">
       <div class="hero-stat">
         <span class="hero-stat-num">10<span class="u">+</span></span>
@@ -103,9 +103,11 @@
         <span class="hero-stat-num">12</span>
         <span class="hero-stat-label">Skills</span>
       </div>
+      <div class="hero-stat hero-stat--mark">
+        <span class="hero-stat-num"><span class="u">×</span>2</span>
+        <span class="hero-stat-label">웹접근성 인증</span>
+      </div>
     </div>
-
-    <!-- 하단 이름 타이포 제거 -->
 
     <!-- 우하단: 연락처 -->
     <div class="hero-bottom">
@@ -115,12 +117,22 @@
       </div>
     </div>
 
-    <div class="hero-scroll" aria-hidden="true">
-      <svg class="hero-scroll-ring" viewBox="0 0 100 100">
-        <defs><path id="scrollArc" d="M50,50 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0"></path></defs>
-        <text><textPath href="#scrollArc">Scroll down · Scroll down · </textPath></text>
-      </svg>
-      <span class="hero-scroll-arrow">&#8595;</span>
+    <!-- 뷰포트 눈금자 — 지금 보고 있는 창의 폭을 실제로 읽어 눈금 위에 찍는다.
+         창을 줄이면 앰버 마커가 브레이크포인트를 하나씩 넘어간다. -->
+    <div class="vp-ruler">
+      <p class="vp-label">
+        Viewport<em class="vp-now" id="vpNow">—</em>
+        <span class="visually-hidden">현재 브라우저 창 너비. 창 크기를 바꾸면 아래 눈금 위 표시가 함께 움직입니다.</span>
+      </p>
+      <div class="vp-track" aria-hidden="true">
+        <span class="vp-tick" style="--at:360"><i>360</i></span>
+        <span class="vp-tick" style="--at:768"><i>768</i></span>
+        <span class="vp-tick" style="--at:1024"><i>1024</i></span>
+        <span class="vp-tick" style="--at:1440"><i>1440</i></span>
+        <span class="vp-tick" style="--at:1920"><i>1920</i></span>
+        <span class="vp-marker" id="vpMarker"></span>
+      </div>
+      <a class="vp-scroll" href="#p2" data-target="p2">Scroll <span aria-hidden="true">&#8595;</span></a>
     </div>
   </div>
   </div>
@@ -133,7 +145,7 @@
     <div class="about-intro">
       <div class="about-section-tag rv d1">
         <div class="tag-line"></div>
-        <h2 class="tag-txt" id="p2-title">02 — About</h2>
+        <h2 class="tag-txt" id="p2-title">About</h2>
       </div>
       <p class="about-quote rv d2">
         <span class="nb">열정적인 태도와 원활한 소통으로</span> <span class="nb">함께 일하고 싶은,</span><br>
@@ -220,8 +232,8 @@
 <section class="page" id="p3" aria-labelledby="p3-title">
   <div class="works-wrap">
     <div class="works-head rv d1">
-      <h2 class="works-title" id="p3-title">03 — Project</h2>
-      <span class="works-count">10 Projects</span>
+      <h2 class="works-title" id="p3-title">Client Work</h2>
+      <span class="works-count">10 Projects · 2021 — 현재</span>
     </div>
     <div class="works-list">
 
@@ -472,9 +484,9 @@
       <div class="side-head-left">
         <div class="about-section-tag">
           <div class="tag-line"></div>
-          <span class="tag-txt">04 — Publishing Worklist</span>
+          <span class="tag-txt">Publishing Worklist</span>
         </div>
-        <h2 class="side-title" id="p7-title">퍼블리싱 워크리스트<br>&amp; 가이드</h2>
+        <h2 class="side-title t-kr" id="p7-title">퍼블리싱 워크리스트<br>&amp; 가이드</h2>
         <p class="side-lede"><span class="nb">작업 화면 현황, 공통 컴포넌트,</span> <span class="nb">마크업 규칙을 한 곳에 모아 관리하는</span> <span class="nb">퍼블리싱 레포지토리입니다.</span><br><span class="nb">웹접근성 기준과 재사용 가능한 구조를</span> <span class="nb">원칙으로 삼아,</span> <strong class="nb">기획부터 디자인, 화면 구현,</strong> <strong class="nb">문서화까지 혼자 만들었습니다.</strong></p>
       </div>
       <div class="side-head-right rv d2">
@@ -540,7 +552,7 @@
       <div class="side-head-left">
         <div class="about-section-tag">
           <div class="tag-line"></div>
-          <span class="tag-txt">05 — Solo Built</span>
+          <span class="tag-txt">Solo Built</span>
         </div>
         <h2 class="side-title" id="p6-title">My WebSites</h2>
         <p class="side-lede"><span class="nb">있으면 좋겠다 싶은 걸</span> <span class="nb">미루지 않고 만들다 보니</span> <span class="nb">아홉 개가 쌓였습니다.</span><br><span class="nb">기획 · 디자인 · 마크업 ·</span> <span class="nb">기능 구현 · 배포까지</span> <strong class="nb">전 과정을 혼자 했고,</strong><br><span class="nb">화면에 들어간 이미지와</span> <span class="nb">3D 오브젝트도</span> <strong class="nb">스톡 한 장 없이 전부 직접 만들었습니다.</strong><br><span class="nb">아래 카드는 전부</span> <span class="nb">지금 열어서 눌러볼 수 있는</span> <span class="nb">실제 사이트입니다.</span></p>
@@ -688,9 +700,9 @@
       <div class="ai-head-left">
         <div class="about-section-tag">
           <div class="tag-line"></div>
-          <span class="tag-txt">06 — AI Workflow</span>
+          <span class="tag-txt">AI Workflow</span>
         </div>
-        <h2 class="ai-title" id="p5-title">AI를 활용하는<br>웹퍼블리셔</h2>
+        <h2 class="ai-title t-kr" id="p5-title">AI를 활용하는<br>웹퍼블리셔</h2>
         <p class="ai-desc"><span class="nb">단순한 도구 사용을 넘어,</span> <span class="nb">AI를 워크플로우에 넣어</span> <span class="nb">더 빠르고 정교하게 구현합니다.</span><br><span class="nb">이 포트폴리오 사이트도</span> <span class="nb">구조와 디자인은 직접 잡고,</span> <span class="nb">구현 단계에서 Claude AI를</span> <span class="nb">도구로 활용했습니다.</span></p>
       </div>
       <div class="ai-head-right rv d2">
@@ -836,7 +848,7 @@
 </section>
 
 <!-- PAGE 4 (Contact) -->
-<section class="page page--ink" id="p4" aria-labelledby="p4-title">
+<section class="page page--paper" id="p4" aria-labelledby="p4-title">
   <div class="rings">
     <div class="ring"></div><div class="ring"></div>
     <div class="ring"></div><div class="ring"></div>
@@ -844,7 +856,7 @@
   <div class="contact-inner">
     <div class="contact-tag rv d1">Get in touch</div>
     <!-- ⑨ line-height:1.5 인라인으로 적용 -->
-    <h2 class="contact-h rv d2" id="p4-title">
+    <h2 class="contact-h t-kr rv d2" id="p4-title">
       함께 만들어 갈<br>
       프로젝트가<br>
       있으신가요?

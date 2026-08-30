@@ -55,9 +55,9 @@ if(FINE_POINTER){
 /* ══ 3. NAV SCROLL ══ */
 const mainNav=document.getElementById('mainNav');
 
-/* 먹지 섹션 위의 고정 UI —
+/* 종이지 섹션 위의 고정 UI —
    내비·페이지 인디케이터·커서는 섹션 밖에 떠 있어서 CSS만으로는 지금 어떤 바탕
-   위에 있는지 알 수 없다. body.on-ink를 붙이면 스타일시트의 INK 컨텍스트가 그대로 걸린다.
+   위에 있는지 알 수 없다. body.on-paper를 붙이면 스타일시트의 PAPER 컨텍스트가 그대로 걸린다.
    IntersectionObserver로는 못 쓴다 — 최초 관찰 때 여러 섹션이 한 배치로 들어와
    마지막 항목이 이기므로 어느 섹션이 위인지가 뒤바뀐다.
    내비가 실제로 겹치는 높이(48px)를 품는 섹션 하나를 직접 찾는 편이 정확하다. */
@@ -68,7 +68,7 @@ function updateInkContext(){
     const r=p.getBoundingClientRect();
     return r.top<=NAV_PROBE && r.bottom>NAV_PROBE;
   });
-  document.body.classList.toggle('on-ink',!!cur&&cur.classList.contains('page--ink'));
+  document.body.classList.toggle('on-paper',!!cur&&cur.classList.contains('page--paper'));
 }
 
 let navTick=false;
@@ -148,6 +148,37 @@ if(!REDUCE){
     }
   }
   setTimeout(type, 1800);
+})();
+
+/* ══ 7-1. VIEWPORT RULER ══
+   히어로 바닥의 눈금자에 지금 창 폭을 찍는다. 창을 줄이면 마커가 움직이고,
+   이미 지나온 브레이크포인트 눈금은 앰버로 남는다.
+   눈금 좌표는 CSS가 --at 값으로 계산하므로(320~2000px 선형), 여기서도 같은 식을 쓴다. */
+(function(){
+  const now    = document.getElementById('vpNow');
+  const marker = document.getElementById('vpMarker');
+  if(!now || !marker) return;
+
+  const ticks = [...document.querySelectorAll('.vp-tick')];
+  const MIN = 320, SPAN = 1680;   /* CSS의 calc((var(--at) - 320) / 1680 * 100%)와 같은 구간 */
+  const pos = w => Math.max(0, Math.min(100, (w - MIN) / SPAN * 100));
+
+  function update(){
+    const w = Math.round(window.innerWidth);
+    now.textContent = w + 'px';
+    marker.style.left = pos(w).toFixed(2) + '%';
+    ticks.forEach(t => t.classList.toggle('past', w >= parseFloat(t.style.getPropertyValue('--at'))));
+  }
+
+  /* resize는 드래그하는 동안 초당 수십 번 온다. 프레임당 한 번으로 묶는다 */
+  let queued = false;
+  window.addEventListener('resize', () => {
+    if(queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; update(); });
+  }, {passive:true});
+
+  update();
 })();
 
 /* ══ 8. PROJECT NUMBER SCRAMBLE on hover ══ */
