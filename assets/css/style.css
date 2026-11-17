@@ -48,6 +48,7 @@ h1, h2, h3, h4, p, figure, dl, dd { margin: 0; }
 
 :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
 
+.nb { white-space: nowrap; }
 .visually-hidden {
   position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
@@ -138,6 +139,7 @@ main:focus { outline: none; }
 }
 .hero-intro {
   margin: clamp(20px, 3vw, 32px) auto 0;
+  max-width: 640px;
   font-size: clamp(14px, 1.6vw, 17px); line-height: 1.75; color: var(--ink);
 }
 
@@ -168,7 +170,11 @@ main:focus { outline: none; }
 /* ==========================================================================
    테이프
    ========================================================================== */
-.tapes { position: relative; z-index: 3; margin: 0 -44px; pointer-events: none; }
+/* 종이 폭과 상관없이 화면 가로 전체를 덮는다. 기울어진 끝이 비지 않도록 양옆 2vw씩 여유를 준다 */
+.tapes {
+  position: relative; z-index: 3; pointer-events: none;
+  width: 104vw; margin-left: calc(50% - 52vw); margin-right: 0;
+}
 .tapes--hero { margin-top: clamp(-90px, -9vw, -40px); }
 .tape {
   overflow: hidden; background: #0E0E0E; color: #fff;
@@ -361,7 +367,7 @@ main:focus { outline: none; }
   .gnb a { font-size: 11px; white-space: nowrap; }
   .hero-name { font-size: 8.4vw; white-space: nowrap; }
   .hero-intro { font-size: 13.5px; }
-  .hero-intro br { display: none; }
+  .tapes--hero { margin-top: -14px; }
   .info-grid { grid-template-columns: 1fr; }
   .br-pc { display: none; }
   .proj-head { grid-template-columns: 26px minmax(0, 1fr); row-gap: 10px; }
@@ -369,7 +375,6 @@ main:focus { outline: none; }
   .proj-detail { padding-left: 38px; }
   .tool-list, .mine-grid { grid-template-columns: 1fr; }
   .note { max-width: 48%; }
-  .tapes { margin: 0 -24px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
